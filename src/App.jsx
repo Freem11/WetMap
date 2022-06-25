@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Home from "./components/Home";
+import Map from "./components/Map";
 import "./App.css";
 
 function App() {
@@ -8,6 +9,7 @@ function App() {
   return (
     <div className="App">
       <Home />
+      <Map />
     </div>
   );
 }

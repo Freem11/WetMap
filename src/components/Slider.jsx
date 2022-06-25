@@ -6,11 +6,11 @@ function valuetext(value) {
     console.log(value);
     return `${value}`;
 }
-
-function getAriaLabel(label) {
-    console.log(label)
-    return `${label}`;
+let index = 1
+function valuelabel(index) {
+    ret
 }
+
 
 const marks = [
     {
@@ -76,8 +76,7 @@ export default function MonthSlider() {
                 aria-label="Custom marks"
                 defaultValue={5}
                 getAriaValueText={valuetext}
-                getAriaLabel={getAriaLabel}
-
+                getAriaLabel={valuelabel}
                 step={1}
                 marks={marks}
                 min={0}

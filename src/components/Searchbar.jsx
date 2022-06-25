@@ -4,7 +4,7 @@ import React from 'react'
 const Searchbar = () => {
     return (
         <div className='search--bar'>
-            <form action="/" method="get">
+            <form>
                 <input
                     type="text"
                     id="header-search"

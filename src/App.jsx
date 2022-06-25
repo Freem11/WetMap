@@ -4,6 +4,7 @@ import Map from "./components/Map";
 import "./App.css";
 import Searchbar from "./components/Searchbar";
 import MonthSlider from "./components/Slider";
+import { PositionOptions } from "mapbox-gl";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -11,9 +12,15 @@ function App() {
   return (
     <div className="App">
       <Home />
-      <Map />
+      <Map style={{
+          position: "absolute",
+          zIndex: 1
+        }}/>
       <MonthSlider />
-      <Searchbar />
+      <Searchbar style={{
+          position: "absolute",
+          zIndex: 2
+        }}/>
     </div>
   );
 }

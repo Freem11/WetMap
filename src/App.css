@@ -40,3 +40,12 @@
 button {
   font-size: calc(10px + 2vmin);
 }
+
+.css-1j15kq1 {
+    width: 80%;
+    margin-top: 10px;
+    margin-left: 10%;
+    margin-right: 10%;
+    position: relative;
+    z-index: -1;
+}

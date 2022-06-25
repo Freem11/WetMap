@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 
 export default function Map() {
-  const position = [51.505, -0.09];
+  const position = [49.246292, -123.116226];
   return (
     <div className="map-container">
       <MapContainer center={position} zoom={8} scrollWheelZoom={false}>

@@ -8,19 +8,27 @@ import { PositionOptions } from "mapbox-gl";
 
 function App() {
   const [count, setCount] = useState(0);
+  const [searchParams, setSearchParams] = useState("");
 
   return (
     <div className="App">
-      <Home />
-      <Map style={{
+      <Home>
+        <Searchbar
+          style={{
+            position: "absolute",
+            zIndex: 2,
+          }}
+          setParams={setSearchParams}
+        />
+      </Home>
+      <Map
+        style={{
           position: "absolute",
-          zIndex: 1
-        }}/>
+          zIndex: 1,
+        }}
+        searchParams={searchParams}
+      />
       <MonthSlider />
-      <Searchbar style={{
-          position: "absolute",
-          zIndex: 2
-        }}/>
     </div>
   );
 }

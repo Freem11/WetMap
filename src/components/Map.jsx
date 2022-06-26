@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import data from "../data/testdata";
+import { data } from "./data/testdata";
 
-export default function Map() {
+export default function Map({ searchParams }) {
   const [latitude, setLatitude] = useState(51.0450299);
   const [longitude, setLongitude] = useState(-114.0547861);
-  const [locations, setLocations] = useState();
+
+  const locations = data.filter((loc) => loc.location === "vancouver");
+
+  console.log("Locations:", locations);
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(function (location) {
@@ -29,14 +32,14 @@ export default function Map() {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
 
-        {data && data.map(searchItem => (
-          <Marker position={position} key={searchItem.}>
-          <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
-          </Popup>
-        </Marker>
-        ))}
-        
+        {locations &&
+          locations[0].sites.map((dataLoc) => (
+            <Marker position={[dataLoc.lat, dataLoc.long]} key={dataLoc.lat}>
+              <Popup>
+                Enjoy Scuba Diving at <br /> {dataLoc}
+              </Popup>
+            </Marker>
+          ))}
       </MapContainer>
     </div>
   );

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Home from "./components/Home";
 import Map from "./components/Map";
+import BasicMenu from "./components/Popup";
 import "./App.css";
 import Searchbar from "./components/Searchbar";
 import MonthSlider from "./components/Slider";
@@ -50,10 +51,10 @@ function App() {
             width: "auto",
             position: "relative",
             zIndex: "2",
-            marginRight: "10px"
+            marginRight: "10px",
           }}
         >
-          <MenuIcon sx={{marginTop: "3px", color: "black", height: "40px", width: "30px", backgroundColor: "white", borderRadius: "5px", border: "2px solid gray"}} />
+              <BasicMenu/>
         </div>
       </div>
 

@@ -53,7 +53,7 @@ function App() {
             marginRight: "10px"
           }}
         >
-          <MenuIcon sx={{marginTop: "6px", color: "black", height: "40px", width: "40px", backgroundColor: "white", borderRadius: "5px", border: "2px solid gray"}} />
+          <MenuIcon sx={{marginTop: "3px", color: "black", height: "40px", width: "30px", backgroundColor: "white", borderRadius: "5px", border: "2px solid gray"}} />
         </div>
       </div>
 

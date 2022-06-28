@@ -21,14 +21,34 @@ function App() {
           setParams={setSearchParams}
         />
       </Home>
-      <Map
+
+      <div
         style={{
           position: "absolute",
-          zIndex: 1,
+          width: "80%",
+          marginLeft: "10%",
+          top: "110px",
+          zIndex: "2"
         }}
-        searchParams={searchParams}
-      />
-      <MonthSlider />
+      >
+        <MonthSlider />
+      </div>
+
+      <div
+        style={{
+          position: "absolute",
+          width: "100%",
+          zIndex: "1",
+        }}
+      >
+        <Map
+          style={{
+            position: "absolute",
+            zIndex: "1",
+          }}
+          searchParams={searchParams}
+        ></Map>
+      </div>
     </div>
   );
 }

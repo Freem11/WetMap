@@ -3151,15 +3151,9 @@
   dependencies:
     "is-arrayish" "^0.2.1"
 
-<<<<<<< HEAD
 "esbuild-darwin-64@0.14.47":
   "integrity" "sha512-R6oaW0y5/u6Eccti/TS6c/2c1xYTb1izwK3gajJwi4vIfNs1s8B1dQzI1UiC9T61YovOQVuePDcfqHLT3mUZJA=="
   "resolved" "https://registry.npmjs.org/esbuild-darwin-64/-/esbuild-darwin-64-0.14.47.tgz"
-=======
-"esbuild-darwin-arm64@0.14.47":
-  "integrity" "sha512-seCmearlQyvdvM/noz1L9+qblC5vcBrhUaOoLEDDoLInF/VQ9IkobGiLlyTPYP5dW1YD4LXhtBgOyevoIHGGnw=="
-  "resolved" "https://registry.npmjs.org/esbuild-darwin-arm64/-/esbuild-darwin-arm64-0.14.47.tgz"
->>>>>>> 933843acfa7b85cd2cbdc8373dbd610a319f14aa
   "version" "0.14.47"
 
 "esbuild@^0.14.27":
@@ -3935,10 +3929,10 @@
   dependencies:
     "@math.gl/web-mercator" "^3.5.5"
 
-"vite@^2.9.9":
-  "integrity" "sha512-suxC36dQo9Rq1qMB2qiRorNJtJAdxguu5TMvBHOc/F370KvqAe9t48vYp+/TbPKRNrMh/J55tOUmkuIqstZaew=="
-  "resolved" "https://registry.npmjs.org/vite/-/vite-2.9.12.tgz"
-  "version" "2.9.12"
+"vite@^2.9.13":
+  "integrity" "sha512-AsOBAaT0AD7Mhe8DuK+/kE4aWYFMx/i0ZNi98hJclxb4e0OhQcZYUrvLjIaQ8e59Ui7txcvKMiJC1yftqpQoDw=="
+  "resolved" "https://registry.npmjs.org/vite/-/vite-2.9.13.tgz"
+  "version" "2.9.13"
   dependencies:
     "esbuild" "^0.14.27"
     "postcss" "^8.4.13"

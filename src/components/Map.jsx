@@ -3,8 +3,8 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { data } from "./data/testdata";
 
 export default function Map({ searchParams }) {
-  const [latitude, setLatitude] = useState(51.0450299);
-  const [longitude, setLongitude] = useState(-114.0547861);
+  const [latitude, setLatitude] = useState(49.246292);
+  const [longitude, setLongitude] = useState(-123.116226);
 
   const locations = data.filter((loc) => loc.location === "vancouver");
 
@@ -24,7 +24,7 @@ export default function Map({ searchParams }) {
     <div className="map-container">
       <MapContainer
         center={position && position}
-        zoom={11}
+        zoom={10}
         scrollWheelZoom={true}
       >
         <TileLayer

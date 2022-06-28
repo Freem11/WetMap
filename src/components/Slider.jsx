@@ -13,19 +13,19 @@ function valuetext(value) {
 const marks = [
     {
         value: 0,
-        label: 'January',
+        label: 'Jan',
     },
     {
         value: 1,
-        label: 'February',
+        label: 'Feb',
     },
     {
         value: 2,
-        label: 'March',
+        label: 'Mar',
     },
     {
         value: 3,
-        label: 'April',
+        label: 'Apr',
     },
     {
         value: 4,
@@ -33,19 +33,19 @@ const marks = [
     },
     {
         value: 5,
-        label: 'June',
+        label: 'Jun',
     },
     {
         value: 6,
-        label: 'July',
+        label: 'Jul',
     },
     {
         value: 7,
-        label: 'August',
+        label: 'Aug',
     },
     {
         value: 8,
-        label: 'Sept',
+        label: 'Sep',
     },
     {
         value: 9,

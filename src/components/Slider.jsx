@@ -69,7 +69,7 @@ export default function MonthSlider() {
 
             }}>
             <Slider sx={{
-                color: 'blue',
+                color: 'black',
             }}
                 aria-label="Custom marks"
                 defaultValue={5}
@@ -79,6 +79,7 @@ export default function MonthSlider() {
                 marks={marks}
                 min={0}
                 max={11}
+                track={false}
 
 
             />

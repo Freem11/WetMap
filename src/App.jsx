@@ -5,6 +5,8 @@ import "./App.css";
 import Searchbar from "./components/Searchbar";
 import MonthSlider from "./components/Slider";
 import { PositionOptions } from "mapbox-gl";
+import { styled, useTheme } from "@mui/material/styles";
+import MenuIcon from "@mui/icons-material/Menu";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -24,14 +26,35 @@ function App() {
 
       <div
         style={{
+          display: "flex",
+          flexDirection: "row",
           position: "absolute",
-          width: "80%",
+          width: "90%",
           marginLeft: "10%",
           top: "110px",
-          zIndex: "2"
+          zIndex: "2",
         }}
       >
-        <MonthSlider />
+        <div
+          style={{
+            width: "90%",
+            position: "relative",
+            zIndex: "2",
+          }}
+        >
+          <MonthSlider />
+        </div>
+
+        <div
+          style={{
+            width: "auto",
+            position: "relative",
+            zIndex: "2",
+            marginRight: "10px"
+          }}
+        >
+          <MenuIcon sx={{marginTop: "6px", color: "black", height: "40px", width: "40px", backgroundColor: "white", borderRadius: "5px", border: "2px solid gray"}} />
+        </div>
       </div>
 
       <div

@@ -48,6 +48,7 @@ function App() {
             position: "relative",
             zIndex: "2",
             marginRight: "10px",
+            maxWidth: "10px"
           }}
         >
           <BasicMenu />
@@ -60,6 +61,8 @@ function App() {
           position: "absolute",
           zIndex: "2",
           top: "94%",
+          marginLeft: "20px",
+          maxWidth: "80px"
         }}
       >
         <Home />
@@ -76,6 +79,7 @@ function App() {
           style={{
             position: "absolute",
             zIndex: "1",
+            height: "100%"
           }}
           searchParams={searchParams}
         ></Map>

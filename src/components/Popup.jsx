@@ -54,6 +54,7 @@ export default function BasicMenu() {
               color: "black",
               height: "40px",
               width: "30px",
+              maxWidth: "30px",
               backgroundColor: "white",
               borderRadius: "5px",
               border: "2px solid gray"}}

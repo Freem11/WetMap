@@ -13,6 +13,12 @@ function App() {
   const [count, setCount] = useState(0);
   const [searchParams, setSearchParams] = useState("");
 
+  const [modal, setModal] = useState(false)
+
+  const toggleModal = () => {
+      setModal(!modal);
+  }
+
   return (
     <div className="App">
       <Home>

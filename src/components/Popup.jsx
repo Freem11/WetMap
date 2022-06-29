@@ -1,10 +1,12 @@
-import * as React from 'react';
+import React, { useState, useContext } from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from '@mui/icons-material/Search';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
+import FormModal from './modals/formModal';
+import PicUploader from './modals/picUploader';
 
 export default function BasicMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -15,6 +17,17 @@ export default function BasicMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const [modal, setModal] = useState(false)
+
+  const toggleModal = () => {
+      setModal(!modal);
+  }
+
+  const doBoth = () => {
+        toggleModal()
+        handleClose()
+  }
 
   return (
     <div>
@@ -49,9 +62,16 @@ export default function BasicMenu() {
             horizontal: 'right',
           }}
       >
-        <MenuItem onClick={handleClose}sx={{height: '40px'}}><SearchIcon/></MenuItem>
-        <MenuItem onClick={handleClose}sx={{height: '40px'}}><PhotoCameraIcon/></MenuItem>
+        <MenuItem onClick={doBoth}sx={{height: '40px'}}><SearchIcon/></MenuItem>
+        <MenuItem onClick={doBoth}sx={{height: '40px'}}><PhotoCameraIcon/></MenuItem>
       </Menu>
+
+      <FormModal 
+        openup={modal} 
+        closeup={toggleModal}>
+        <PicUploader
+        closeup={toggleModal}/>
+        </FormModal>
     </div>
   );
 }

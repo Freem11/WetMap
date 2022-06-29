@@ -2,8 +2,8 @@ import React from "react";
 
 export default function Home({ children }) {
   return (
-    <h2>
-      Welcome to the Scuba Dive App
+    <h2 style={{fontFamily: "fantasy"}}>
+      DiveGo
       {children}
     </h2>
   );

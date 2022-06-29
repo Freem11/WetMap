@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
 
 const Searchbar = ({ setSearchItem }) => {
   const [params, setParams] = useState("");
@@ -8,17 +10,16 @@ const Searchbar = ({ setSearchItem }) => {
     setSearchItem(params);
   };
   return (
-    <div className="search--bar">
-      <form onSubmit={search}>
-        <input
-          type="text"
-          id="header-search"
-          placeholder="Search animals"
-          value={params}
-          onChange={() => setParams(e.target.value)}
-        />
-      </form>
-    </div>
+    <Box
+    component="form"
+    sx={{
+      '& > :not(style)': { m: 1, width: '25ch' },
+    }}
+    noValidate
+    autoComplete="off"
+  >
+    <TextField id="standard-basic" label="Creature Search..." variant="standard" />
+  </Box>
   );
 };
 

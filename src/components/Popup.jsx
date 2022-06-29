@@ -7,6 +7,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import FormModal from './modals/formModal';
 import PicUploader from './modals/picUploader';
+import CreatureSearch from './modals/creatureSearch'
 
 export default function BasicMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -19,15 +20,25 @@ export default function BasicMenu() {
   };
 
   const [modal, setModal] = useState(false)
+  const [modal2, setModal2] = useState(false)
 
   const toggleModal = () => {
       setModal(!modal);
   }
 
+  const toggleModal2 = () => {
+    setModal2(!modal2);
+}
+
   const doBoth = () => {
         toggleModal()
         handleClose()
   }
+
+  const doTwo = () => {
+    toggleModal2()
+    handleClose()
+}
 
   return (
     <div>
@@ -62,7 +73,7 @@ export default function BasicMenu() {
             horizontal: 'right',
           }}
       >
-        <MenuItem onClick={doBoth}sx={{height: '40px'}}><SearchIcon/></MenuItem>
+        <MenuItem onClick={doTwo}sx={{height: '40px'}}><SearchIcon/></MenuItem>
         <MenuItem onClick={doBoth}sx={{height: '40px'}}><PhotoCameraIcon/></MenuItem>
       </Menu>
 
@@ -72,6 +83,14 @@ export default function BasicMenu() {
         <PicUploader
         closeup={toggleModal}/>
         </FormModal>
+
+        <FormModal 
+        openup={modal2} 
+        closeup={toggleModal2}>
+        <CreatureSearch
+        closeup={toggleModal2}/>
+        </FormModal>
+
     </div>
   );
 }

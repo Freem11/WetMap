@@ -13,24 +13,14 @@ function App() {
   const [count, setCount] = useState(0);
   const [searchParams, setSearchParams] = useState("");
 
-  const [modal, setModal] = useState(false)
+  const [modal, setModal] = useState(false);
 
   const toggleModal = () => {
-      setModal(!modal);
-  }
+    setModal(!modal);
+  };
 
   return (
     <div className="App">
-      <Home>
-        <Searchbar
-          style={{
-            position: "absolute",
-            zIndex: 2,
-          }}
-          setParams={setSearchParams}
-        />
-      </Home>
-
       <div
         style={{
           display: "flex",
@@ -38,10 +28,10 @@ function App() {
           position: "absolute",
           width: "90%",
           marginLeft: "10%",
-          top: "110px",
+          top: "5px",
           zIndex: "2",
-        }}
-      >
+        }}>
+
         <div
           style={{
             width: "90%",
@@ -60,8 +50,19 @@ function App() {
             marginRight: "10px",
           }}
         >
-              <BasicMenu/>
+          <BasicMenu />
         </div>
+      </div>
+
+      <div
+        style={{
+          width: "20%",
+          position: "absolute",
+          zIndex: "2",
+          top: "94%",
+        }}
+      >
+        <Home />
       </div>
 
       <div

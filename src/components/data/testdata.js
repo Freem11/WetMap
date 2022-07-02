@@ -58,3 +58,13 @@ export const data = [
     ],
   },
 ];
+
+export const specimins = [
+  {Animal: "Giant Pacific Octopus"},
+  {Animal: "Chimera"},
+  {Animal: "Dog Fish"},
+  {Animal: "Flavillinea"},
+  {Animal: "Brittle Star"},
+  {Animal: "Basket Star"},
+  {Animal: "Grunt Sculpin"}
+  ]

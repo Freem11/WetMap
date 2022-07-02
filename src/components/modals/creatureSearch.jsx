@@ -2,6 +2,13 @@ import { useState, useContext, useEffect } from "react";
 import { Container, Button, Form, FormGroup, Label, Input } from "reactstrap";
 import "./picUploader.css"
 import Searchbar from '../Searchbar'
+import { specimins } from "../data/testdata";
+import Box from '@mui/material/Box';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemText from '@mui/material/ListItemText';
+import Divider from '@mui/material/Divider';
 
 const CreatureSearch = (props) => {
 
@@ -46,6 +53,25 @@ const CreatureSearch = (props) => {
       <Form onSubmit={handleSubmit}>
        <Searchbar/>
       </Form>
+
+      <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+      <Divider />
+      <nav aria-label="secondary mailbox folders">
+        <List sx={{backgroundColor: "rgb(221, 226, 226)"}}>
+
+        {specimins &&
+          specimins.map((life) => (
+            <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemText primary={life.Animal} />
+            </ListItemButton>
+          </ListItem>
+          ))}
+
+        </List>
+      </nav>
+    </Box>
+
     </Container>
   );
 };

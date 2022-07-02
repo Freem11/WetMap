@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { data } from "./data/testdata";
 import anchor from '../images/anchor6.png'
+// import Heatmaplayer from "react-leaflet-heatmap-layer"
 import L from 'leaflet';
+
 
 export default function Map({ searchParams }) {
   const [latitude, setLatitude] = useState(49.246292);
@@ -38,11 +40,19 @@ export default function Map({ searchParams }) {
         zoom={10}
         scrollWheelZoom={true}
       >
+        {/* <Heatmaplayer 
+        fitBoundsOnLoad
+        fitBoundOnUpdate
+        points={locations.sites.map(dataLoc)}
+        longitudeExtractor={m => m[1]}
+        latitudeExrtactor={m => m[0]}
+        intensityExtractor={m => parseFloat(m[2])}
+        /> */}
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-
+ 
         {locations &&
           locations[0].sites.map((dataLoc) => (
             <Marker position={[dataLoc.lat, dataLoc.long]} key={dataLoc.lat} icon={anchorIcon}>

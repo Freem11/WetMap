@@ -12,35 +12,50 @@ const PicUploader = (props) => {
     Animal: "",
     Latitude: "",
     Longitude: "",
+    PicDate: '',
     PicFile: null,
   });
 
   const handleChange = (e) => {
-    let opts = [],
-      opt;
 
-    if (e.target.type === "select" || e.target.type === "select-multiple") {
-      for (let i = 0; i < e.target.options.length; i++) {
-        opt = e.target.options[i];
+    if (e.target.name === "PicFile") {
 
-        if (opt.selected) {
-          opts.push(opt.value);
-        }
-      }
-      setFormVals({ ...formVals, [e.target.name]: opts });
-    } else {
-      opt = e.target.value;
-      setFormVals({ ...formVals, [e.target.name]: opt });
+      console.log("meee",e.target.files[0])
+
+    let fileName = e.target.files[0].name
+    let baseDate = e.target.files[0].lastModifiedDate
+
+    let yr = baseDate.getFullYear().toString();
+    let mth = (baseDate.getMonth() + 1).toString();
+    let dy = baseDate.getDate().toString();
+
+    if (dy.length == 1) {
+      dy = '0' + dy
     }
+
+    if (mth.length == 1) {
+      mth = '0' + mth
+    }
+
+    let moddedDate = yr + "-" + mth + "-" + dy
+    console.log("!!!", moddedDate)
+    setFormVals({ ...formVals, PicFile: fileName, PicDate: moddedDate })
+    } else {
+      setFormVals({ ...formVals, [e.target.name]: e.target.value });
+
+    }
+    
+
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(e);
     closeup();
-
     return;
   };
+
+  console.log("what am i?", formVals)
+
 
   return (
     <Container fluid>
@@ -86,7 +101,8 @@ const PicUploader = (props) => {
               label="Date Taken"
               variant="standard"
               type="date"
-              name="date"
+              name="PicDate"
+              value={formVals.PicDate}
               onChange={handleChange}
             />
           </FormGroup>
@@ -99,7 +115,7 @@ const PicUploader = (props) => {
               label="Latitude"
               variant="standard"
               type="decimal"
-              name="latitude"
+              name="Latitude"
               onChange={handleChange}
             />
           </FormGroup>
@@ -112,7 +128,7 @@ const PicUploader = (props) => {
               label="Longitude"
               variant="standard"
               type="decimal"
-              name="longitude"
+              name="Longitude"
               onChange={handleChange}
             />
           </FormGroup>

@@ -60,11 +60,29 @@ export const data = [
 ];
 
 export const specimins = [
-  {Animal: "Giant Pacific Octopus"},
-  {Animal: "Chimera"},
-  {Animal: "Dog Fish"},
-  {Animal: "Flavillinea"},
-  {Animal: "Brittle Star"},
-  {Animal: "Basket Star"},
-  {Animal: "Grunt Sculpin"}
-  ]
+  { Animal: "Giant Pacific Octopus" },
+  { Animal: "Chimera" },
+  { Animal: "Dog Fish" },
+  { Animal: "Flavillinea" },
+  { Animal: "Brittle Star" },
+  { Animal: "Basket Star" },
+  { Animal: "Grunt Sculpin" },
+];
+
+export const backups = [
+  [49.350175, -123.284022],
+  [49.368626, -123.298157],
+  [49.396288, -123.316498],
+  // [49.350175, -123.284022],
+  [49.543876, -123.247892],
+  // [49.543876, -123.247892],
+  // [49.543876, -123.247892],
+  [49.516823, -123.290664],
+  [49.352725, -123.428342],
+  [49.184488, -123.889773],
+  // [49.184488, -123.889773],
+  [49.315982, -124.214889],
+  // [49.315982, -124.214889],
+  // [49.315982, -124.214889],
+  // [49.315982, -124.214889],
+];

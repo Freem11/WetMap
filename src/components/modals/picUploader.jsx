@@ -4,23 +4,46 @@ import "./picUploader.css";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from '@mui/material/Button';
+import exifr from 'exifr'
 
 const PicUploader = (props) => {
   const { closeup } = props;
 
+   
   const [formVals, setFormVals] = useState({
     Animal: "",
     Latitude: "",
     Longitude: "",
-    PicDate: '',
+    PicDate: "",
     PicFile: null,
   });
+
+  useEffect(() => {
+
+  let Rnow = new Date();
+
+  let yr0 = Rnow.getFullYear().toString();
+  let mth0 = (Rnow.getMonth() + 1).toString();
+  let dy0 = Rnow.getDate().toString();
+
+  if (dy0.length == 1) {
+    dy0 = '0' + dy0
+  }
+
+  if (mth0.length == 1) {
+    mth0 = '0' + mth0
+  }
+
+  let rightNow = yr0 + "-" + mth0 + "-" + dy0
+
+  setFormVals({ ...formVals,  PicDate: rightNow })
+
+  }, []);
+
 
   const handleChange = (e) => {
 
     if (e.target.name === "PicFile") {
-
-      console.log("meee",e.target.files[0])
 
     let fileName = e.target.files[0].name
     let baseDate = e.target.files[0].lastModifiedDate
@@ -37,15 +60,26 @@ const PicUploader = (props) => {
       mth = '0' + mth
     }
 
+    // console.log("just work already", e.target.files[0])
+
+    // let {latitude, longitude} = exifr.gps(e.target.files[0].name)
+  
+    // Promise.all([latitude, longitude])
+    // .then((response) => {
+    //     console.log("huh?", response);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+ 
     let moddedDate = yr + "-" + mth + "-" + dy
-    console.log("!!!", moddedDate)
+
     setFormVals({ ...formVals, PicFile: fileName, PicDate: moddedDate })
     } else {
       setFormVals({ ...formVals, [e.target.name]: e.target.value });
 
     }
     
-
   };
 
   const handleSubmit = (e) => {
@@ -53,9 +87,6 @@ const PicUploader = (props) => {
     closeup();
     return;
   };
-
-  console.log("what am i?", formVals)
-
 
   return (
     <Container fluid>
@@ -104,6 +135,7 @@ const PicUploader = (props) => {
               name="PicDate"
               value={formVals.PicDate}
               onChange={handleChange}
+              sx={{width: "167px"}}
             />
           </FormGroup>
         </div>

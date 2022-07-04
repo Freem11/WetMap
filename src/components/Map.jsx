@@ -1,27 +1,32 @@
 import React, { useState, useEffect } from "react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import { data } from "./data/testdata";
+import { MapContainer, TileLayer, Marker, Popup} from "react-leaflet";
+import { data, backups } from "./data/testdata";
 import anchor from '../images/anchor6.png'
-// import Heatmaplayer from "react-leaflet-heatmap-layer"
+import {HeatmapLayer} from 'react-leaflet-heatmap-layer-v3'
 import L from 'leaflet';
 
 
 export default function Map({ searchParams }) {
+
   const [latitude, setLatitude] = useState(49.246292);
   const [longitude, setLongitude] = useState(-123.116226);
+
 
   const locations = data.filter((loc) => loc.location === "vancouver");
 
   let anchorIcon = L.icon({
     iconUrl: anchor,
     iconRetinaUrl: anchor,
-    iconAnchor: [5, 55],
-    popupAnchor: [10, -44],
+    iconAnchor: [10, 10],
+    popupAnchor: [0, 0],
     iconSize: [25, 25],
   });
-
-  console.log("Locations:", locations);
-
+  
+  const gradient = { 0.4: "blue", 0.8: "blue", 1.0: "blue" };
+  const gradient2 = { 0.4: "red", 0.8: "red", 1.0: "red" };
+  const gradient3 = { 0.4: "green", 0.8: "green", 1.0: "green" };
+  const gradient4 = { 0.4: "orange", 0.8: "orange", 1.0: "orange" };
+  
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(function (location) {
       setLatitude(location.coords.latitude);
@@ -40,14 +45,18 @@ export default function Map({ searchParams }) {
         zoom={10}
         scrollWheelZoom={true}
       >
-        {/* <Heatmaplayer 
-        fitBoundsOnLoad
-        fitBoundOnUpdate
-        points={locations.sites.map(dataLoc)}
-        longitudeExtractor={m => m[1]}
-        latitudeExrtactor={m => m[0]}
-        intensityExtractor={m => parseFloat(m[2])}
-        /> */}
+      <HeatmapLayer
+            fitBoundsOnLoad
+            fitBoundsOnUpdate
+            points={backups}
+            longitudeExtractor={m => m[1]}
+            latitudeExtractor={m => m[0]}
+            intensityExtractor={m => parseFloat(m[2])}
+            radius={10}
+            max={100}
+            minOpacity={1}
+            useLocalExtrema={true}
+            />
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

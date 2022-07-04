@@ -5,7 +5,6 @@ import BasicMenu from "./components/Popup";
 import "./App.css";
 import Searchbar from "./components/Searchbar";
 import MonthSlider from "./components/Slider";
-import { PositionOptions } from "mapbox-gl";
 import { styled, useTheme } from "@mui/material/styles";
 import MenuIcon from "@mui/icons-material/Menu";
 

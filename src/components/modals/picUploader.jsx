@@ -44,14 +44,16 @@ const PicUploader = (props) => {
   const handleChange = (e) => {
 
     if (e.target.name === "PicFile") {
-
+      
     let fileName = e.target.files[0].name
-    let baseDate = e.target.files[0].lastModifiedDate
+    let baseDate = e.target.files[0].lastModified
 
-    let yr = baseDate.getFullYear().toString();
-    let mth = (baseDate.getMonth() + 1).toString();
-    let dy = baseDate.getDate().toString();
-
+    var convDate = new Date(baseDate);
+   
+    let yr = convDate.getFullYear().toString();
+    let mth = (convDate.getMonth() + 1).toString();
+    let dy = convDate.getDate().toString();
+    
     if (dy.length == 1) {
       dy = '0' + dy
     }
@@ -59,6 +61,8 @@ const PicUploader = (props) => {
     if (mth.length == 1) {
       mth = '0' + mth
     }
+
+    
 
     // console.log("just work already", e.target.files[0])
 
@@ -73,7 +77,7 @@ const PicUploader = (props) => {
     //   });
  
     let moddedDate = yr + "-" + mth + "-" + dy
-
+    console.log("ummm?", moddedDate)
     setFormVals({ ...formVals, PicFile: fileName, PicDate: moddedDate })
     } else {
       setFormVals({ ...formVals, [e.target.name]: e.target.value });

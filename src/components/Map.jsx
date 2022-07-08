@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import { data, backups, tester } from "./data/testdata";
+import { data, diveSites, tester } from "./data/testdata";
 import anchor from "../images/anchor6.png";
 import { HeatmapLayer } from "react-leaflet-heatmap-layer-v3";
 import L from "leaflet";
@@ -31,7 +31,7 @@ function DisplayPosition({map}) {
     }
   }, [map, onMove])
 
-  return(<div style={{zIndex: 7, position: "relative", top: '300px'}}>{position.lat}, {position.lng} {zoomlev}</div>)
+  return(<div style={{zIndex: 7, position: "relative", top: '300px'}}>{position.lat}, {position.lng}, <br></br> {zoomlev}</div>)
 }
 
  function ExtState({ searchParams }) {
@@ -58,7 +58,7 @@ function DisplayPosition({map}) {
 
   // const initialPosition = [latitude, longitude];
   // const [position, setPosition] = useState(initialPosition);
-
+  console.log("yikes", diveSites)
 
   const displayMap = useMemo(() => (
   
@@ -66,6 +66,8 @@ function DisplayPosition({map}) {
     center={center}
     zoom={zoom}
     scrollWheelZoom={true}
+    minZoom={4}
+    maxZoom={17}
     ref={setMap}
   >
     <HeatmapLayer
@@ -85,15 +87,15 @@ function DisplayPosition({map}) {
       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
     />
 
-    {locations &&
-      locations[0].sites.map((dataLoc) => (
+    {diveSites &&
+      diveSites.map((dataLoc) => (
         <Marker
-          key={dataLoc.key}
-          position={[dataLoc.lat, dataLoc.long]}
+          key={dataLoc.name}
+          position={[dataLoc.lat, dataLoc.lng]}
           icon={anchorIcon}
         >
           <Popup>
-            Enjoy Scuba Diving at <br /> {dataLoc.lat + "," + dataLoc.long}
+            {dataLoc.name}
           </Popup>
         </Marker>
       ))}

@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import { data, diveSites, tester } from "./data/testdata";
+import { diveSites, heatVals } from "./data/testdata";
 import anchor from "../images/anchor6.png";
 import { HeatmapLayer } from "react-leaflet-heatmap-layer-v3";
 import L from "leaflet";
+import dataParams from '../helpers/mapHelpers'
 
 const center = [49.246292, -123.116226]
 const zoom = 7
 let timoutHanlder;
+let newParams;
 
 function DisplayPosition({map}) {
 
@@ -19,6 +21,8 @@ function DisplayPosition({map}) {
     timoutHanlder = window.setTimeout(function(){
       setPosition(map.getCenter()) 
       setZoomlev(map.getZoom())
+      newParams = dataParams(zoomlev, position.lat, position.lng)
+      console.log("lets see...", newParams)
     },50)
     },
     [map],
@@ -37,8 +41,6 @@ function DisplayPosition({map}) {
  function ExtState({ searchParams }) {
   const [map , setMap] = useState(null);
 
-  const locations = data.filter((loc) => loc.location === "vancouver");
-
   let anchorIcon = L.icon({
     iconUrl: anchor,
     iconRetinaUrl: anchor,
@@ -48,17 +50,6 @@ function DisplayPosition({map}) {
   });
 
   const gradient1 = { 0.2: "blue", 0.4: "green", 0.6: "yellow", 0.8: "orange", 1: "red"};
-
-  // useEffect(() => {
-  //   navigator.geolocation.getCurrentPosition(function (location) {
-  //     setLatitude(location.coords.latitude);
-  //     setLongitude(location.coords.longitude);
-  //   });
-  // }, [latitude, longitude]);
-
-  // const initialPosition = [latitude, longitude];
-  // const [position, setPosition] = useState(initialPosition);
-  console.log("yikes", diveSites)
 
   const displayMap = useMemo(() => (
   
@@ -73,7 +64,7 @@ function DisplayPosition({map}) {
     <HeatmapLayer
       fitBoundsOnLoad
       fitBoundsOnUpdate
-      points={tester}
+      points={heatVals}
       longitudeExtractor={(m) => m[1]}
       latitudeExtractor={(m) => m[0]}
       intensityExtractor={(m) => parseFloat(m[2])}

@@ -3,13 +3,12 @@ import { Container, Form, FormGroup, Label, Input } from "reactstrap";
 import "./picUploader.css";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import Button from '@mui/material/Button';
-import exifr from 'exifr'
+import Button from "@mui/material/Button";
+import exifr from "exifr";
 
 const PicUploader = (props) => {
   const { closeup } = props;
 
-   
   const [formVals, setFormVals] = useState({
     Animal: "",
     Latitude: "",
@@ -18,72 +17,57 @@ const PicUploader = (props) => {
     PicFile: null,
   });
 
+  const [uploadedFile, setUploadedFile] = useState({
+    selectedFile: null,
+  });
+
   useEffect(() => {
+    let Rnow = new Date();
 
-  let Rnow = new Date();
+    let yr0 = Rnow.getFullYear().toString();
+    let mth0 = (Rnow.getMonth() + 1).toString();
+    let dy0 = Rnow.getDate().toString();
 
-  let yr0 = Rnow.getFullYear().toString();
-  let mth0 = (Rnow.getMonth() + 1).toString();
-  let dy0 = Rnow.getDate().toString();
+    if (dy0.length == 1) {
+      dy0 = "0" + dy0;
+    }
 
-  if (dy0.length == 1) {
-    dy0 = '0' + dy0
-  }
+    if (mth0.length == 1) {
+      mth0 = "0" + mth0;
+    }
 
-  if (mth0.length == 1) {
-    mth0 = '0' + mth0
-  }
+    let rightNow = yr0 + "-" + mth0 + "-" + dy0;
 
-  let rightNow = yr0 + "-" + mth0 + "-" + dy0
-
-  setFormVals({ ...formVals,  PicDate: rightNow })
-
+    setFormVals({ ...formVals, PicDate: rightNow, Longitude: null, Latitude: null });
   }, []);
 
-
   const handleChange = (e) => {
-
     if (e.target.name === "PicFile") {
-      
-    let fileName = e.target.files[0].name
-    let baseDate = e.target.files[0].lastModified
+      let fileName = e.target.files[0].name;
+      let baseDate = e.target.files[0].lastModified;
 
-    var convDate = new Date(baseDate);
-   
-    let yr = convDate.getFullYear().toString();
-    let mth = (convDate.getMonth() + 1).toString();
-    let dy = convDate.getDate().toString();
-    
-    if (dy.length == 1) {
-      dy = '0' + dy
-    }
-
-    if (mth.length == 1) {
-      mth = '0' + mth
-    }
-
-    
-
-    // console.log("just work already", e.target.files[0])
-
-    // let {latitude, longitude} = exifr.gps(e.target.files[0].name)
-  
-    // Promise.all([latitude, longitude])
-    // .then((response) => {
-    //     console.log("huh?", response);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
+      setUploadedFile({ ...uploadedFile, selectedFile: e.target.files[0] });
  
-    let moddedDate = yr + "-" + mth + "-" + dy
-    console.log("ummm?", moddedDate)
-    setFormVals({ ...formVals, PicFile: fileName, PicDate: moddedDate })
+      var convDate = new Date(baseDate);
+
+      let yr = convDate.getFullYear().toString();
+      let mth = (convDate.getMonth() + 1).toString();
+      let dy = convDate.getDate().toString();
+
+      if (dy.length == 1) {
+        dy = "0" + dy;
+      }
+
+      if (mth.length == 1) {
+        mth = "0" + mth;
+      }
+
+      let moddedDate = yr + "-" + mth + "-" + dy;
+
+      setFormVals({ ...formVals, PicFile: fileName, PicDate: moddedDate });
     } else {
       setFormVals({ ...formVals, [e.target.name]: e.target.value });
-
     }
-    
   };
 
   const handleSubmit = (e) => {
@@ -92,6 +76,34 @@ const PicUploader = (props) => {
     return;
   };
 
+if (uploadedFile.selectedFile !== null){
+  exifr
+    .parse(uploadedFile.selectedFile)
+    .then((output) => {
+
+  if (output.GPSLatitudeRef === "S") {
+     setFormVals({
+        ...formVals,
+        Latitude: 0 - (output.GPSLatitude[0] + output.GPSLatitude[1]/60 + output.GPSLatitude[2]/3600),
+        Longitude: output.GPSLongitude[0] + output.GPSLongitude[1]/60 + output.GPSLongitude[2]/3600
+      })
+  } else if (output.GPSLongitudeRef === "W") { 
+    setFormVals({
+    ...formVals,
+    Latitude: (output.GPSLatitude[0] + output.GPSLatitude[1]/60 + output.GPSLatitude[2]/3600),
+    Longitude: 0 - output.GPSLongitude[0] + output.GPSLongitude[1]/60 + output.GPSLongitude[2]/3600
+  }) 
+} else {  
+    setFormVals({
+    ...formVals,
+    Latitude: (output.GPSLatitude[0] + output.GPSLatitude[1]/60 + output.GPSLatitude[2]/3600),
+    Longitude: 0 - output.GPSLongitude[0] + output.GPSLongitude[1]/60 + output.GPSLongitude[2]/3600
+  })
+} 
+    }
+    )
+  }
+
   return (
     <Container fluid>
       <Form onSubmit={handleSubmit}>
@@ -99,9 +111,9 @@ const PicUploader = (props) => {
           <Label>
             <strong>Please Upload Your Picture</strong>
           </Label>
-          </div>
+        </div>
 
-          <div className="uploadbox">
+        <div className="uploadbox">
           <FormGroup>
             <Input
               placeholder="Upload"
@@ -139,7 +151,7 @@ const PicUploader = (props) => {
               name="PicDate"
               value={formVals.PicDate}
               onChange={handleChange}
-              sx={{width: "167px"}}
+              sx={{ width: "167px" }}
             />
           </FormGroup>
         </div>
@@ -152,11 +164,12 @@ const PicUploader = (props) => {
               variant="standard"
               type="decimal"
               name="Latitude"
+              value={formVals.Latitude}
               onChange={handleChange}
             />
           </FormGroup>
         </div>
-       
+
         <div className="inputbox">
           <FormGroup>
             <TextField
@@ -165,13 +178,16 @@ const PicUploader = (props) => {
               variant="standard"
               type="decimal"
               name="Longitude"
+              value={formVals.Longitude}
               onChange={handleChange}
             />
           </FormGroup>
         </div>
-       
+
         <FormGroup>
-          <Button variant="text" id="modalButton">Submit Photo</Button>
+          <Button variant="text" id="modalButton">
+            Submit Photo
+          </Button>
         </FormGroup>
       </Form>
     </Container>

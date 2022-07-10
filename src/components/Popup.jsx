@@ -5,9 +5,11 @@ import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from '@mui/icons-material/Search';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
+import AnchorIcon from '@mui/icons-material/Anchor';
 import FormModal from './modals/formModal';
 import PicUploader from './modals/picUploader';
 import CreatureSearch from './modals/creatureSearch'
+import SiteSubmitter from './modals/siteSubmitter'
 
 export default function BasicMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -21,6 +23,7 @@ export default function BasicMenu() {
 
   const [modal, setModal] = useState(false)
   const [modal2, setModal2] = useState(false)
+  const [modal3, setModal3] = useState(false)
 
   const toggleModal = () => {
       setModal(!modal);
@@ -30,14 +33,23 @@ export default function BasicMenu() {
     setModal2(!modal2);
 }
 
-  const doBoth = () => {
-        toggleModal()
-        handleClose()
+  const toggleModal3 = () => {
+    setModal3(!modal3);
+}
+
+const doBoth = () => {
+  toggleModal()
+  handleClose()
   }
 
-  const doTwo = () => {
-    toggleModal2()
-    handleClose()
+const doTwo = () => {
+  toggleModal2()
+  handleClose()
+}
+
+const doDeuce = () => {
+  toggleModal3()
+  handleClose()
 }
 
   return (
@@ -76,6 +88,7 @@ export default function BasicMenu() {
       >
         <MenuItem onClick={doTwo}sx={{height: '40px'}}><SearchIcon/></MenuItem>
         <MenuItem onClick={doBoth}sx={{height: '40px'}}><PhotoCameraIcon/></MenuItem>
+        <MenuItem onClick={doDeuce}sx={{height: '40px'}}><AnchorIcon/></MenuItem>
       </Menu>
 
       <FormModal 
@@ -90,6 +103,13 @@ export default function BasicMenu() {
         closeup={toggleModal2}>
         <CreatureSearch
         closeup={toggleModal2}/>
+        </FormModal>
+
+        <FormModal 
+        openup={modal3} 
+        closeup={toggleModal3}>
+        <SiteSubmitter
+        closeup={toggleModal3}/>
         </FormModal>
 
     </div>

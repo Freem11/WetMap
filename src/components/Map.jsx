@@ -1,17 +1,18 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import React, { useState, useEffect, useCallback, useMemo, Fragment } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { diveSites, heatVals } from "./data/testdata";
 import anchor from "../images/anchor6.png";
 import { HeatmapLayer } from "react-leaflet-heatmap-layer-v3";
 import L from "leaflet";
-import dataParams from '../helpers/mapHelpers'
+import {dataParams, filterSites} from '../helpers/mapHelpers'
 
 const center = [49.246292, -123.116226]
 const zoom = 7
 let timoutHanlder;
 let newParams;
+let sites;
 
-function DisplayPosition({map}) {
+function DisplayPosition({map, resetData}) {
 
   const [position, setPosition] = useState(() => map.getCenter())
   const [zoomlev, setZoomlev] = useState(() => map.getZoom())
@@ -21,12 +22,22 @@ function DisplayPosition({map}) {
     timoutHanlder = window.setTimeout(function(){
       setPosition(map.getCenter()) 
       setZoomlev(map.getZoom())
-      newParams = dataParams(zoomlev, position.lat, position.lng)
-      console.log("lets see...", newParams)
     },50)
     },
     [map],
   )
+  const [newSites, setnewSites] = useState(diveSites)
+
+
+  useEffect(() => {
+    newParams = dataParams(zoomlev, position.lat, position.lng)
+    sites = setnewSites(filterSites(newParams, diveSites))
+    resetData(newSites)
+    
+    return () => {
+
+    }
+  }, [position, zoomlev])
 
   useEffect(() => {
       map.on('move', onMove)
@@ -35,11 +46,12 @@ function DisplayPosition({map}) {
     }
   }, [map, onMove])
 
-  return(<div style={{zIndex: 7, position: "relative", top: '300px'}}>{position.lat}, {position.lng}, <br></br> {zoomlev}</div>)
+  return(<Fragment></Fragment>)
 }
 
  function ExtState({ searchParams }) {
   const [map , setMap] = useState(null);
+  const [dataSet, setDataSet] = useState(null)
 
   let anchorIcon = L.icon({
     iconUrl: anchor,
@@ -58,7 +70,7 @@ function DisplayPosition({map}) {
     zoom={zoom}
     scrollWheelZoom={true}
     minZoom={4}
-    maxZoom={17}
+    maxZoom={14}
     ref={setMap}
   >
     <HeatmapLayer
@@ -78,8 +90,9 @@ function DisplayPosition({map}) {
       url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
     />
 
-    {diveSites &&
-      diveSites.map((dataLoc) => (
+
+    {dataSet &&
+      dataSet.map((dataLoc) => (
         <Marker
           key={dataLoc.name}
           position={[dataLoc.lat, dataLoc.lng]}
@@ -90,11 +103,12 @@ function DisplayPosition({map}) {
           </Popup>
         </Marker>
       ))}
-  </MapContainer>), [])
+      
+  </MapContainer>), [dataSet])
   
   return (
     <div className="map-container">
-      {map ? <DisplayPosition map={map} /> : null}
+      {map ? <DisplayPosition map={map} resetData={setDataSet}/> : null}
       {displayMap}
     </div>
   );

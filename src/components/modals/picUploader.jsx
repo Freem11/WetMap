@@ -38,7 +38,12 @@ const PicUploader = (props) => {
 
     let rightNow = yr0 + "-" + mth0 + "-" + dy0;
 
-    setFormVals({ ...formVals, PicDate: rightNow, Longitude: null, Latitude: null });
+    setFormVals({
+      ...formVals,
+      PicDate: rightNow,
+      Longitude: null,
+      Latitude: null,
+    });
   }, []);
 
   const handleChange = (e) => {
@@ -47,7 +52,7 @@ const PicUploader = (props) => {
       let baseDate = e.target.files[0].lastModified;
 
       setUploadedFile({ ...uploadedFile, selectedFile: e.target.files[0] });
- 
+
       var convDate = new Date(baseDate);
 
       let yr = convDate.getFullYear().toString();
@@ -76,32 +81,52 @@ const PicUploader = (props) => {
     return;
   };
 
-if (uploadedFile.selectedFile !== null){
-  exifr
-    .parse(uploadedFile.selectedFile)
-    .then((output) => {
-
-  if (output.GPSLatitudeRef === "S") {
-     setFormVals({
-        ...formVals,
-        Latitude: 0 - (output.GPSLatitude[0] + output.GPSLatitude[1]/60 + output.GPSLatitude[2]/3600),
-        Longitude: output.GPSLongitude[0] + output.GPSLongitude[1]/60 + output.GPSLongitude[2]/3600
-      })
-  } else if (output.GPSLongitudeRef === "W") { 
-    setFormVals({
-    ...formVals,
-    Latitude: (output.GPSLatitude[0] + output.GPSLatitude[1]/60 + output.GPSLatitude[2]/3600),
-    Longitude: 0 - output.GPSLongitude[0] + output.GPSLongitude[1]/60 + output.GPSLongitude[2]/3600
-  }) 
-} else {  
-    setFormVals({
-    ...formVals,
-    Latitude: (output.GPSLatitude[0] + output.GPSLatitude[1]/60 + output.GPSLatitude[2]/3600),
-    Longitude: 0 - output.GPSLongitude[0] + output.GPSLongitude[1]/60 + output.GPSLongitude[2]/3600
-  })
-} 
-    }
-    )
+  if (uploadedFile.selectedFile !== null) {
+    exifr.parse(uploadedFile.selectedFile).then((output) => {
+      if (output.GPSLatitude && output.GPSLongitude) {
+        if (output.GPSLatitudeRef === "S") {
+          setFormVals({
+            ...formVals,
+            Latitude:
+              0 -
+              (output.GPSLatitude[0] +
+                output.GPSLatitude[1] / 60 +
+                output.GPSLatitude[2] / 3600),
+            Longitude:
+              output.GPSLongitude[0] +
+              output.GPSLongitude[1] / 60 +
+              output.GPSLongitude[2] / 3600,
+          });
+        } else if (output.GPSLongitudeRef === "W") {
+          setFormVals({
+            ...formVals,
+            Latitude:
+              output.GPSLatitude[0] +
+              output.GPSLatitude[1] / 60 +
+              output.GPSLatitude[2] / 3600,
+            Longitude:
+              0 -
+              output.GPSLongitude[0] +
+              output.GPSLongitude[1] / 60 +
+              output.GPSLongitude[2] / 3600,
+          });
+        } else {
+          setFormVals({
+            ...formVals,
+            Latitude:
+              output.GPSLatitude[0] +
+              output.GPSLatitude[1] / 60 +
+              output.GPSLatitude[2] / 3600,
+            Longitude:
+              output.GPSLongitude[0] +
+              output.GPSLongitude[1] / 60 +
+              output.GPSLongitude[2] / 3600,
+          });
+        }
+      } else {
+        console.log("No GPS on this one!");
+      }
+    });
   }
 
   return (

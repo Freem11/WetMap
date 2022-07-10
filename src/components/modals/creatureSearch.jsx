@@ -1,45 +1,36 @@
 import { useState, useContext, useEffect } from "react";
 import { Container, Button, Form, FormGroup, Label, Input } from "reactstrap";
 import "./picUploader.css"
-import Searchbar from '../Searchbar'
-import { specimins } from "../data/testdata";
+import { photos } from "../data/testdata";
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
+import filterCreatures from '../../helpers/optionHelpers'
+import TextField from '@mui/material/TextField';
 
 const CreatureSearch = (props) => {
 
   const { closeup } = props
+  const [ formVals, setFormVals ] = useState("");
+  const [ filteredData, setFilteredData ] = useState("");
 
-  const [ formVals, setFormVals ] = useState({
-    Animal: "",
-    Latitude: "",
-    Longitude: "",
-    PicFile: null,
-  });
+
+  useEffect(() => {
+      setFilteredData(photos)
+  }, []);
 
   const handleChange = (e) => {
-    let opts = [],
-      opt;
-
-    if (e.target.type === "select" || e.target.type === "select-multiple") {
-      for (let i = 0; i < e.target.options.length; i++) {
-        opt = e.target.options[i];
-
-        if (opt.selected) {
-          opts.push(opt.value);
-        }
-      }
-      setFormVals({ ...formVals, [e.target.name]: opts });
-    } else {
-      opt = e.target.value;
-      setFormVals({ ...formVals, [e.target.name]: opt });
-    }
+    setFormVals(e.target.value)
   };
 
+  useEffect(() => {
+    setFilteredData(filterCreatures(formVals.toLocaleLowerCase(), photos))
+}, [formVals]);
+
+  
   const handleSubmit = (e) => {
       e.preventDefault();
       console.log(e)
@@ -51,7 +42,7 @@ const CreatureSearch = (props) => {
   return (
     <Container fluid>
       <Form onSubmit={handleSubmit}>
-       <Searchbar/>
+      <TextField id="standard-basic" label="Creature Search..." variant="standard" onChange={handleChange} value={formVals} sx={{marginLeft: "20px", width: "80%"}}/>
       </Form>
 
       <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
@@ -59,8 +50,8 @@ const CreatureSearch = (props) => {
       <nav aria-label="secondary mailbox folders">
         <List sx={{backgroundColor: "rgb(221, 226, 226)"}}>
 
-        {specimins &&
-          specimins.map((life) => (
+        {filteredData &&
+          filteredData.map((life) => (
             <ListItem disablePadding>
             <ListItemButton>
               <ListItemText primary={life.Animal} />

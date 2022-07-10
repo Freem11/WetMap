@@ -1,21 +1,23 @@
 
-export const specimins = [
-  { Animal: "Giant Pacific Octopus" },
-  { Animal: "Chimera" },
-  { Animal: "Dog Fish" },
-  { Animal: "Flavillinea" },
-  { Animal: "Brittle Star" },
-  { Animal: "Basket Star" },
-  { Animal: "Grunt Sculpin" },
+export const photos = [
+  { Animal: "Giant Pacific Octopus", Latitude: 49.3134, Longitude: -124.2424, DateTaken: '2019-08-05', PhotoFile: 'octo.jpg'},
+  { Animal: "Chimera", Latitude: 50.846, Longitude: -127.643, DateTaken: '2019-07-11', PhotoFile: 'Ghost.jpg'},
+  { Animal: "Dog Fish", Latitude: 49.3714, Longitude: -123.2925, DateTaken: '2019-05-24', PhotoFile: 'lilShark.jpg'},
+  { Animal: "Flavillinea", Latitude: 49.5615, Longitude: -123.236944, DateTaken: '2019-03-08', PhotoFile: 'Nudi.jpg'},
+  { Animal: "Brittle Star", Latitude: 49.217, Longitude: -123.893, DateTaken: '2019-09-28', PhotoFile: 'BrittleStar.jpg'},
+  { Animal: "Basket Star", Latitude: 50.1325, Longitude: -125.336, DateTaken: '2019-11-12', PhotoFile: 'Basket.jpg'},
+  { Animal: "Grunt Sculpin", Latitude: 49.4495, Longitude: -123.2405, DateTaken: '2019-02-22', PhotoFile: 'Gsculp.jpg' },
 ];
 
 export const heatVals = [
   
-    [49.350175 , -123.284022 , 50 ],
-    [49.368626 , -123.298157 , 10 ],
-    [49.543876 , -123.247892 , 30 ],
-    [49.315982 , -124.214889 , 40 ],
-    [49.184488 , -123.889773 , 20 ],
+    [49.3134, -124.2424, 50, "Giant Pacific Octopus", 8],
+    [50.846, -127.643, 10, "Chimera", 7],
+    [49.217, -123.893, 30, "Brittle Star", 9],
+    [49.5615, -123.236944, 40, "Flavillinea", 3],
+    [49.3714, -123.2925, 20, "Dog Fish", 5],
+    [50.1325, -125.336, 30, "Basket Star", 11],
+    [49.4495, -123.2405, 20, "Grunt Sculpin", 2],
 ]
 
 export const diveSites = [

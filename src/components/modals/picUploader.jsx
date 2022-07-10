@@ -92,18 +92,20 @@ const PicUploader = (props) => {
               (output.GPSLatitude[0] +
                 output.GPSLatitude[1] / 60 +
                 output.GPSLatitude[2] / 3600),
-            Longitude:
-              output.GPSLongitude[0] +
-              output.GPSLongitude[1] / 60 +
-              output.GPSLongitude[2] / 3600,
           });
-        } else if (output.GPSLongitudeRef === "W") {
+        } else {
           setFormVals({
             ...formVals,
             Latitude:
               output.GPSLatitude[0] +
               output.GPSLatitude[1] / 60 +
               output.GPSLatitude[2] / 3600,
+          });
+        }
+
+        if (output.GPSLongitudeRef === "W") {
+          setFormVals({
+            ...formVals,
             Longitude:
               0 -
               output.GPSLongitude[0] +
@@ -113,16 +115,13 @@ const PicUploader = (props) => {
         } else {
           setFormVals({
             ...formVals,
-            Latitude:
-              output.GPSLatitude[0] +
-              output.GPSLatitude[1] / 60 +
-              output.GPSLatitude[2] / 3600,
             Longitude:
               output.GPSLongitude[0] +
               output.GPSLongitude[1] / 60 +
               output.GPSLongitude[2] / 3600,
           });
         }
+        
       } else {
         console.log("No GPS on this one!");
       }

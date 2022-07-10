@@ -1,4 +1,4 @@
- function  dataParams(Zoom, Lat, Lng) {
+function dataParams(Zoom, Lat, Lng) {
   let minLat;
   let maxLat;
 
@@ -84,17 +84,21 @@
       break;
   }
 
-  return {minLat, maxLat, minLng, maxLng};
-};
-
+  return { minLat, maxLat, minLng, maxLng };
+}
 
 function filterSites(newParams, array) {
-  let newArr = []
-   array.forEach(diveSite => {
-      if (diveSite.lat > newParams.minLat && diveSite.lat < newParams.maxLat && diveSite.lng > newParams.minLng && diveSite.lng < newParams.maxLng){
-        newArr.push(diveSite)
-      }
-    });
-      return newArr;
+  let newArr = [];
+  array.forEach((diveSite) => {
+    if (
+      diveSite.lat > newParams.minLat &&
+      diveSite.lat < newParams.maxLat &&
+      diveSite.lng > newParams.minLng &&
+      diveSite.lng < newParams.maxLng
+    ) {
+      newArr.push(diveSite);
+    }
+  });
+  return newArr;
 }
-export { dataParams, filterSites }
+export { dataParams, filterSites };

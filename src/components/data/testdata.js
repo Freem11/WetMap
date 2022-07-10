@@ -1,7 +1,3 @@
-// lat  +- 0.2
-// long +- 1.0
-
-
 
 export const specimins = [
   { Animal: "Giant Pacific Octopus" },

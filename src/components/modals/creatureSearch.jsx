@@ -10,13 +10,14 @@ import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import filterCreatures from '../../helpers/optionHelpers'
 import TextField from '@mui/material/TextField';
+import { AnimalContext } from '../contexts/animalContext'
 
 const CreatureSearch = (props) => {
 
   const { closeup } = props
   const [ formVals, setFormVals ] = useState("");
   const [ filteredData, setFilteredData ] = useState("");
-
+  const {animalVal, setAnimalVal} = useContext(AnimalContext)
 
   useEffect(() => {
       setFilteredData(photos)
@@ -33,7 +34,7 @@ const CreatureSearch = (props) => {
   
   const handleSubmit = (e) => {
       e.preventDefault();
-      console.log(e)
+      setAnimalVal(e.target.textContent)
       closeup()
       
     return;
@@ -53,8 +54,8 @@ const CreatureSearch = (props) => {
         {filteredData &&
           filteredData.map((life) => (
             <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemText primary={life.Animal} />
+            <ListItemButton onClick={handleSubmit} >
+              <ListItemText  primary={life.Animal} label={life.Animal}/>
             </ListItemButton>
           </ListItem>
           ))}

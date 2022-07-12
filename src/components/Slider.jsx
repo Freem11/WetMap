@@ -1,14 +1,8 @@
-import * as React from 'react';
+import * as React  from 'react';
+import { useContext } from 'react'
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
-
-function valuetext(value) {
-    console.log(value);
-    return `${value}`;
-}
-
-
-
+import { SliderContext } from './contexts/sliderContext'
 
 const marks = [
     {
@@ -61,6 +55,13 @@ const marks = [
     },
 ];
 export default function MonthSlider() {
+
+const {sliderVal, setSliderVal} = useContext(SliderContext)
+
+function valuetext(value) {
+    setSliderVal(value)
+}
+
     return (
         <Box
             sx={{

@@ -73,7 +73,7 @@ function valuetext(value) {
                 color: 'black',
             }}
                 aria-label="Custom marks"
-                defaultValue={5}
+                defaultValue={sliderVal}
                 getAriaValueText={valuetext}
                 // getAriaLabel={valuelabel}
                 step={1}

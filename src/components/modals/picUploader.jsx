@@ -5,9 +5,11 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import exifr from "exifr";
+import { useNavigate } from "react-router-dom";
 
 const PicUploader = (props) => {
   const { closeup } = props;
+  let navigate = useNavigate();
 
   const [formVals, setFormVals] = useState({
     Animal: "",
@@ -121,11 +123,14 @@ const PicUploader = (props) => {
               output.GPSLongitude[2] / 3600,
           });
         }
-        
       } else {
         console.log("No GPS on this one!");
       }
     });
+  }
+
+  const navi= () => {
+    navigate("/pinDrop")
   }
 
   return (
@@ -180,31 +185,40 @@ const PicUploader = (props) => {
           </FormGroup>
         </div>
 
-        <div className="inputbox">
-          <FormGroup>
-            <TextField
-              id="standard-basic"
-              label="Latitude"
-              variant="standard"
-              type="decimal"
-              name="Latitude"
-              value={formVals.Latitude}
-              onChange={handleChange}
-            />
-          </FormGroup>
-        </div>
+        <div>
+          <div>
+            <div className="inputbox">
+              <FormGroup>
+                <TextField
+                  id="standard-basic"
+                  label="Latitude"
+                  variant="standard"
+                  type="decimal"
+                  name="Latitude"
+                  value={formVals.Latitude}
+                  onChange={handleChange}
+                />
+              </FormGroup>
+            </div>
 
-        <div className="inputbox">
+            <div className="inputbox">
+              <FormGroup>
+                <TextField
+                  id="standard-basic"
+                  label="Longitude"
+                  variant="standard"
+                  type="decimal"
+                  name="Longitude"
+                  value={formVals.Longitude}
+                  onChange={handleChange}
+                />
+              </FormGroup>
+            </div>
+          </div>
           <FormGroup>
-            <TextField
-              id="standard-basic"
-              label="Longitude"
-              variant="standard"
-              type="decimal"
-              name="Longitude"
-              value={formVals.Longitude}
-              onChange={handleChange}
-            />
+            <Button variant="text" id="jumpButton" onClick={navi}>
+              Drop Pin
+            </Button>
           </FormGroup>
         </div>
 

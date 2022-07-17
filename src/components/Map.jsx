@@ -1,10 +1,12 @@
-import React, { useState, useEffect, useCallback, useMemo, Fragment } from "react";
+import React, { useState, useEffect, useCallback, useMemo, useContext, Fragment } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { diveSites, heatVals } from "./data/testdata";
 import anchor from "../images/anchor6.png";
 import { HeatmapLayer } from "react-leaflet-heatmap-layer-v3";
 import L from "leaflet";
 import {dataParams, filterSites} from '../helpers/mapHelpers'
+import { CoordsContext } from './contexts/mapCoordsContext'
+import { ZoomContext } from './contexts/mapZoomContext'
 
 const center = [49.246292, -123.116226]
 const zoom = 7
@@ -16,6 +18,9 @@ function DisplayPosition({map, resetData}) {
 
   const [position, setPosition] = useState(() => map.getCenter())
   const [zoomlev, setZoomlev] = useState(() => map.getZoom())
+
+  const { setMapCoords } = useContext(CoordsContext)
+  const { setMapZoom } = useContext(ZoomContext)
 
   const onMove = useCallback(() => {
     window.clearTimeout(timoutHanlder)
@@ -32,6 +37,8 @@ function DisplayPosition({map, resetData}) {
   useEffect(() => {
     newParams = dataParams(zoomlev, position.lat, position.lng)
     sites = setnewSites(filterSites(newParams, diveSites))
+    setMapCoords([position.lat, position.lng])
+    setMapZoom(zoomlev)
     resetData(newSites)
     
     return () => {

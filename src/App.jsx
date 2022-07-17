@@ -1,87 +1,53 @@
 import { useState } from "react";
-import Home from "./components/Home";
-import Map from "./components/Map";
-import BasicMenu from "./components/Popup";
+import { BrowserRouter } from "react-router-dom";
+import { Routes, Route } from 'react-router-dom';
+import MapPage from "./components/MapPage"
+import PinMap from "./components/PinMap"
 import "./App.css";
-import MonthSlider from "./components/Slider";
-import { styled, useTheme } from "@mui/material/styles";
-import MenuIcon from "@mui/icons-material/Menu";
+import { SliderContext } from './components/contexts/sliderContext'
+import { AnimalContext } from './components/contexts/animalContext'
+import { ZoomContext } from './components/contexts/mapZoomContext'
+import { CoordsContext } from './components/contexts/mapCoordsContext'
 
 function App() {
   const [count, setCount] = useState(0);
   const [searchParams, setSearchParams] = useState("");
 
-  const [modal, setModal] = useState(false);
+  const d = new Date();
+  const [sliderVal, setSliderVal] = useState(d.getMonth())
+  const [animalVal, setAnimalVal] = useState('None')
 
-  const toggleModal = () => {
-    setModal(!modal);
-  };
+  const [mapCoords, setMapCoords] = useState([49.246292, -123.116226])
+  const [mapZoom, setMapZoom] = useState(7)
+  
+  console.log("??", sliderVal)
+  console.log("!!", animalVal)
+
+  console.log("AAA", mapCoords)
+  console.log("ZZZ", mapZoom)
 
   return (
     <div className="App">
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          position: "absolute",
-          width: "90%",
-          marginLeft: "10%",
-          top: "5px",
-          zIndex: "2",
-        }}>
-
-        <div
-          style={{
-            width: "90%",
-            position: "relative",
-            zIndex: "2",
-          }}
-        >
-          <MonthSlider />
-        </div>
-
-        <div
-          style={{
-            width: "auto",
-            position: "relative",
-            zIndex: "2",
-            marginRight: "10px",
-            maxWidth: "10px"
-          }}
-        >
-          <BasicMenu />
-        </div>
-      </div>
-
-      <div
-        style={{
-          width: "20%",
-          position: "absolute",
-          zIndex: "2",
-          top: "94%",
-          marginLeft: "20px",
-          maxWidth: "80px"
-        }}
-      >
-        <Home />
-      </div>
-
-      <div
-        style={{
-          position: "absolute",
-          width: "100%",
-          zIndex: "1",
-        }}
-      >
-        <Map
-          style={{
-            position: "absolute",
-            zIndex: "1",
-            height: "100%"
-          }}
-          searchParams={searchParams}
-        ></Map>
-      </div>
+      <SliderContext.Provider value={{sliderVal, setSliderVal}}>
+      <AnimalContext.Provider value={{animalVal, setAnimalVal}}>
+      <ZoomContext.Provider value={{mapZoom, setMapZoom}}>
+      <CoordsContext.Provider value={{mapCoords, setMapCoords}}>
+        <BrowserRouter>
+        <Routes>
+          <Route
+          path="/"
+          element={<MapPage/>}
+          />
+          <Route
+          path="/pinDrop"
+          element={<PinMap/>}
+          />
+      </Routes>
+      </BrowserRouter>
+      </CoordsContext.Provider>
+      </ZoomContext.Provider>
+      </AnimalContext.Provider>
+      </SliderContext.Provider>
     </div>
   );
 }

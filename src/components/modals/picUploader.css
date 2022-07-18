@@ -53,3 +53,14 @@
 #locate{
     margin-left: 20%;
 }
+
+.Tbox {
+    display: flex;
+    flex-direction: row;
+    margin-left: 23px;
+}
+
+.Gbox {
+    margin-top: 28px;
+    margin-left: 5px;
+}

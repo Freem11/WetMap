@@ -5,18 +5,22 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import exifr from "exifr";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; 
+import { PinContext } from '../contexts/pinContext'
+import PlaceIcon from '@mui/icons-material/Place';
+import { height } from "@mui/system";
 
 const PicUploader = (props) => {
   const { closeup } = props;
   let navigate = useNavigate();
+  const { pin, setPin } = useContext(PinContext)
 
   const [formVals, setFormVals] = useState({
     Animal: "",
     Latitude: "",
     Longitude: "",
     PicDate: "",
-    PicFile: null,
+    PicFile: ""
   });
 
   const [uploadedFile, setUploadedFile] = useState({
@@ -24,6 +28,7 @@ const PicUploader = (props) => {
   });
 
   useEffect(() => {
+    if (pin.PicDate === "") {
     let Rnow = new Date();
 
     let yr0 = Rnow.getFullYear().toString();
@@ -40,12 +45,11 @@ const PicUploader = (props) => {
 
     let rightNow = yr0 + "-" + mth0 + "-" + dy0;
 
-    setFormVals({
-      ...formVals,
+    setPin({
+      ...pin,
       PicDate: rightNow,
-      Longitude: null,
-      Latitude: null,
     });
+  }
   }, []);
 
   const handleChange = (e) => {
@@ -71,9 +75,9 @@ const PicUploader = (props) => {
 
       let moddedDate = yr + "-" + mth + "-" + dy;
 
-      setFormVals({ ...formVals, PicFile: fileName, PicDate: moddedDate });
+      setPin({ ...pin, PicFile: fileName, PicDate: moddedDate });
     } else {
-      setFormVals({ ...formVals, [e.target.name]: e.target.value });
+      setPin({ ...pin, [e.target.name]: e.target.value });
     }
   };
 
@@ -87,8 +91,8 @@ const PicUploader = (props) => {
     exifr.parse(uploadedFile.selectedFile).then((output) => {
       if (output.GPSLatitude && output.GPSLongitude) {
         if (output.GPSLatitudeRef === "S") {
-          setFormVals({
-            ...formVals,
+          setPin({
+            ...pin,
             Latitude:
               0 -
               (output.GPSLatitude[0] +
@@ -96,8 +100,8 @@ const PicUploader = (props) => {
                 output.GPSLatitude[2] / 3600),
           });
         } else {
-          setFormVals({
-            ...formVals,
+          setPin({
+            ...pin,
             Latitude:
               output.GPSLatitude[0] +
               output.GPSLatitude[1] / 60 +
@@ -106,8 +110,8 @@ const PicUploader = (props) => {
         }
 
         if (output.GPSLongitudeRef === "W") {
-          setFormVals({
-            ...formVals,
+          setPin({
+            ...pin,
             Longitude:
               0 -
               output.GPSLongitude[0] +
@@ -115,8 +119,8 @@ const PicUploader = (props) => {
               output.GPSLongitude[2] / 3600,
           });
         } else {
-          setFormVals({
-            ...formVals,
+          setPin({
+            ...pin,
             Longitude:
               output.GPSLongitude[0] +
               output.GPSLongitude[1] / 60 +
@@ -152,6 +156,7 @@ const PicUploader = (props) => {
               type="file"
               name="PicFile"
               bsSize="lg"
+              // value={pin.PicFile}
               onChange={handleChange}
             ></Input>
           </FormGroup>
@@ -165,6 +170,7 @@ const PicUploader = (props) => {
               variant="standard"
               type="text"
               name="Animal"
+              value={pin.Animal}
               onChange={handleChange}
             />
           </FormGroup>
@@ -178,14 +184,14 @@ const PicUploader = (props) => {
               variant="standard"
               type="date"
               name="PicDate"
-              value={formVals.PicDate}
+              value= {pin.PicDate}
               onChange={handleChange}
               sx={{ width: "167px" }}
             />
           </FormGroup>
         </div>
 
-        <div>
+        <div className="Tbox">
           <div>
             <div className="inputbox">
               <FormGroup>
@@ -195,7 +201,7 @@ const PicUploader = (props) => {
                   variant="standard"
                   type="decimal"
                   name="Latitude"
-                  value={formVals.Latitude}
+                  value={pin.Latitude}
                   onChange={handleChange}
                 />
               </FormGroup>
@@ -209,17 +215,19 @@ const PicUploader = (props) => {
                   variant="standard"
                   type="decimal"
                   name="Longitude"
-                  value={formVals.Longitude}
+                  value={pin.Longitude}
                   onChange={handleChange}
                 />
               </FormGroup>
             </div>
           </div>
+          <div className="Gbox">
           <FormGroup>
             <Button variant="text" id="jumpButton" onClick={navi}>
-              Drop Pin
+            <PlaceIcon sx={{color: "maroon", height: "40px", width: "40px"}}></PlaceIcon>
             </Button>
           </FormGroup>
+          </div>
         </div>
 
         <FormGroup>

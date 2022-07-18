@@ -10,6 +10,7 @@ import FormModal from './modals/formModal';
 import PicUploader from './modals/picUploader';
 import CreatureSearch from './modals/creatureSearch'
 import SiteSubmitter from './modals/siteSubmitter'
+import { PicModalContext } from './contexts/picModalContext'
 
 export default function BasicMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -21,8 +22,10 @@ export default function BasicMenu() {
     setAnchorEl(null);
   };
 
-  const [modal, setModal] = useState(false)
   const [modal2, setModal2] = useState(false)
+  
+  const { modal, setModal } = useContext(PicModalContext)
+
   const [modal3, setModal3] = useState(false)
 
   const toggleModal = () => {

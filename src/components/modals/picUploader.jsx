@@ -15,14 +15,6 @@ const PicUploader = (props) => {
   let navigate = useNavigate();
   const { pin, setPin } = useContext(PinContext)
 
-  const [formVals, setFormVals] = useState({
-    Animal: "",
-    Latitude: "",
-    Longitude: "",
-    PicDate: "",
-    PicFile: ""
-  });
-
   const [uploadedFile, setUploadedFile] = useState({
     selectedFile: null,
   });

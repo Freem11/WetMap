@@ -43,3 +43,6 @@ amplifytools.xcconfig
 .secret-*
 **.sample
 #amplify-do-not-edit-end
+
+src/helpers/wetmap-355400-a176914ccf76.json/
+src/helpers/VisionTest.js/

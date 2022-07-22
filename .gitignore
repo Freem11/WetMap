@@ -46,3 +46,6 @@ amplifytools.xcconfig
 
 src/helpers/wetmap-355400-a176914ccf76.json/
 src/helpers/VisionTest.js/
+
+.env
+.env.local

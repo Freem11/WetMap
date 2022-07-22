@@ -12,10 +12,9 @@ import { Satellite } from "@mui/icons-material";
 import { useMemo } from "react";
 
 
-
 export default function Home() {
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: '???',
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
     libraries: ["visualization"],
   });
 

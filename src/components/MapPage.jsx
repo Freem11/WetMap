@@ -1,4 +1,5 @@
-import Home from "./Home"
+import Homeo from "./Home"
+import Home from './googleMap'
 import Map from "./Map";
 import BasicMenu from "./Popup";
 import MonthSlider from "./Slider";
@@ -55,7 +56,7 @@ const MapPage = () => {
           maxWidth: "80px"
         }}
       >
-        <Home/>
+        <Homeo/>
       </div>
 
       <div
@@ -66,7 +67,8 @@ const MapPage = () => {
           top: "96.8%",
           left: "4%",
           marginRight: "20px",
-          maxWidth: "500px"
+          maxWidth: "500px",
+          backgroundColor: "white"
         }}
       >
         Target: {animalVal}
@@ -79,13 +81,13 @@ const MapPage = () => {
           zIndex: "1",
         }}
       >
-        <Map
+        <Home
           style={{
             position: "absolute",
             zIndex: "1",
             height: "100%"
           }}
-        ></Map>
+        ></Home>
       </div>
       </div>
     )

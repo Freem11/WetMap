@@ -88,6 +88,7 @@ function dataParams(Zoom, Lat, Lng) {
 }
 
 function filterSites(newParams, array) {
+
   let newArr = [];
   array.forEach((diveSite) => {
     if (

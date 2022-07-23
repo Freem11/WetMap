@@ -10,10 +10,17 @@ import "./googleMap.css";
 import { diveSites } from "./data/testdata";
 import anchorIcon from "../images/anchor11.png";
 import { Satellite } from "@mui/icons-material";
-import { useMemo, useState, useContext, useCallback, useRef, useEffect } from "react";
-import { CoordsContext } from './contexts/mapCoordsContext'
-import { ZoomContext } from './contexts/mapZoomContext'
-
+import {
+  useMemo,
+  useState,
+  useContext,
+  useCallback,
+  useRef,
+  useEffect,
+} from "react";
+import { CoordsContext } from "./contexts/mapCoordsContext";
+import { ZoomContext } from "./contexts/mapZoomContext";
+import { dataParams, filterSites } from "../helpers/mapHelpers";
 
 export default function Home() {
   const { isLoaded } = useLoadScript({
@@ -25,9 +32,18 @@ export default function Home() {
   return <Map></Map>;
 }
 
-
 function Map() {
+  const { mapCoords, setMapCoords } = useContext(CoordsContext);
+  const { mapZoom, setMapZoom } = useContext(ZoomContext);
 
+  const [newSites, setnewSites] = useState(diveSites);
+  const [mapRef, setMapRef] = useState(null);
+
+  const center = useMemo(() => ({ lat: mapCoords[0], lng: mapCoords[1] }), []);
+  const zoom = useMemo(() => mapZoom, []);
+
+  let timoutHanlder;
+  let newParams;
 
   const gHeatVals = [
     { location: new google.maps.LatLng(50.846, -127.643), weight: 10 },
@@ -42,7 +58,9 @@ function Map() {
 
   const options = useMemo(() => ({
     mapTypeId: "satellite",
-    clickableIcons: false
+    clickableIcons: false,
+    maxZoom: 14,
+    minZoom: 4,
   }));
 
   const heatOpts = useMemo(() => ({
@@ -50,54 +68,60 @@ function Map() {
     radius: 30,
   }));
 
+  useEffect(() => {
+    setMapCoords([center.lat, center.lng]);
+    setMapZoom(zoom);
 
-  const [mapRef, setMapRef] = useState(null)
- 
-  const handleOnLoad = map => {
-    setMapRef(map)
-  }
+    newParams = dataParams(mapZoom, mapCoords[0], mapCoords[1]);
+    setnewSites(filterSites(newParams, diveSites));
+  }, []);
 
-  let timoutHanlder;
+  const handleOnLoad = (map) => {
+    setMapRef(map);
+  };
 
   const handleMapCenterChange = () => {
     if (mapRef) {
-      window.clearTimeout(timoutHanlder)
-      timoutHanlder = window.setTimeout(function(){
-        //set state here
-        const newCenter = mapRef.getCenter()
-        console.log("yikes", newCenter.lat(), newCenter.lng())
+      window.clearTimeout(timoutHanlder);
+      timoutHanlder = window.setTimeout(function () {
+        const newCenter = mapRef.getCenter();
+        setMapCoords([newCenter.lat(), newCenter.lng()]);
 
-      },50)
-    
+        newParams = dataParams(mapZoom, mapCoords[0], mapCoords[1]);
+        setnewSites(filterSites(newParams, diveSites));
+      }, 50);
     }
-  }
+  };
 
   const handleMapZoomChange = () => {
     if (mapRef) {
-       //set state here
-      const newZoom = mapRef.getZoom()
-      console.log("yikes", newZoom)
+      const newZoom = mapRef.getZoom();
+      setMapZoom(newZoom);
+
+      newParams = dataParams(mapZoom, mapCoords[0], mapCoords[1]);
+      setnewSites(filterSites(newParams, diveSites));
     }
-  }
+  };
 
   return (
     <GoogleMap
-      zoom={10}
-      center={{ lat: 49.246292, lng: -123.116226 }}
+      zoom={zoom}
+      center={center}
       mapContainerClassName="map-container"
       options={options}
       onLoad={handleOnLoad}
       onCenterChanged={handleMapCenterChange}
       onZoomChanged={handleMapZoomChange}
     >
-      <HeatmapLayer 
-      data={gHeatVals} 
-      options={heatOpts}
-      opacity={1} 
-      radius={9}></HeatmapLayer>
+      <HeatmapLayer
+        data={gHeatVals}
+        options={heatOpts}
+        opacity={1}
+        radius={9}
+      ></HeatmapLayer>
 
-      {diveSites &&
-        diveSites.map((dataLoc) => (
+      {newSites &&
+        newSites.map((dataLoc) => (
           <Marker
             key={dataLoc.name}
             position={{ lat: dataLoc.lat, lng: dataLoc.lng }}

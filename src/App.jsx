@@ -20,7 +20,7 @@ function App() {
   const [animalVal, setAnimalVal] = useState("None");
 
   const [mapCoords, setMapCoords] = useState([49.246292, -123.116226]);
-  const [mapZoom, setMapZoom] = useState(7);
+  const [mapZoom, setMapZoom] = useState(10);
 
   const [modal, setModal] = useState(false);
 

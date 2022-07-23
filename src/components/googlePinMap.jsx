@@ -3,11 +3,10 @@ import {
   GoogleMap,
   useLoadScript,
   Marker,
-  HeatmapLayer,
   useGoogleMap,
 } from "@react-google-maps/api";
 import "./googleMap.css";
-import { diveSites, heatVals } from "./data/testdata";
+import { diveSites } from "./data/testdata";
 import anchorIcon from "../images/anchor11.png";
 import { Satellite } from "@mui/icons-material";
 import {
@@ -22,22 +21,20 @@ import { CoordsContext } from "./contexts/mapCoordsContext";
 import { ZoomContext } from "./contexts/mapZoomContext";
 import { dataParams, filterSites } from "../helpers/mapHelpers";
 
-export default function Home() {
+export default function PinHome() {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
-    libraries: ["visualization"],
   });
 
   if (!isLoaded) return <div>Loading...</div>;
-  return <Map></Map>;
+  return <PinMap></PinMap>;
 }
 
-function Map() {
+function PinMap() {
   const { mapCoords, setMapCoords } = useContext(CoordsContext);
   const { mapZoom, setMapZoom } = useContext(ZoomContext);
 
   const [newSites, setnewSites] = useState(diveSites);
-  const [heatpts, setHeatPts] = useState(formatHeatVals(heatVals));
   const [mapRef, setMapRef] = useState(null);
 
   const center = useMemo(() => ({ lat: mapCoords[0], lng: mapCoords[1] }), []);
@@ -45,16 +42,6 @@ function Map() {
 
   let timoutHanlder;
   let newParams;
-  let heatSlice;
-
-  function formatHeatVals(heatValues) {
-      let newArr = []
-      heatValues.forEach((heatPoint) => {
-          let newpt = {location: new google.maps.LatLng(heatPoint.lat, heatPoint.lng), weight: heatPoint.weight}
-          newArr.push(newpt)
-      })
-      return newArr
-  } 
 
   const options = useMemo(() => ({
     mapTypeId: "satellite",
@@ -63,20 +50,12 @@ function Map() {
     minZoom: 4,
   }));
 
-  const heatOpts = useMemo(() => ({
-    opacity: 1,
-    radius: 30,
-  }));
-
   useEffect(() => {
     setMapCoords([center.lat, center.lng]);
     setMapZoom(zoom);
 
     newParams = dataParams(mapZoom, mapCoords[0], mapCoords[1]);
     setnewSites(filterSites(newParams, diveSites));
-
-    heatSlice = filterSites(newParams, heatVals)
-    setHeatPts(formatHeatVals(heatSlice))
   }, []);
 
   const handleOnLoad = (map) => {
@@ -92,10 +71,6 @@ function Map() {
 
         newParams = dataParams(mapZoom, mapCoords[0], mapCoords[1]);
         setnewSites(filterSites(newParams, diveSites));
-
-        heatSlice = filterSites(newParams, heatVals)
-        setHeatPts(formatHeatVals(heatSlice))
-
       }, 50);
     }
   };
@@ -107,10 +82,6 @@ function Map() {
 
       newParams = dataParams(mapZoom, mapCoords[0], mapCoords[1]);
       setnewSites(filterSites(newParams, diveSites));
-
-      heatSlice = filterSites(newParams, heatVals)
-      setHeatPts(formatHeatVals(heatSlice))
-
     }
   };
 
@@ -124,12 +95,6 @@ function Map() {
       onCenterChanged={handleMapCenterChange}
       onZoomChanged={handleMapZoomChange}
     >
-      <HeatmapLayer
-        data={heatpts}
-        options={heatOpts}
-        opacity={1}
-        radius={9}
-      ></HeatmapLayer>
 
       {newSites &&
         newSites.map((dataLoc) => (

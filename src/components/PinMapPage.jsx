@@ -1,4 +1,4 @@
-import Map from "./PinMap";
+import PinHome from "./googlePinMap"
 import { useState, useContext } from "react";
 import { PinContext } from './contexts/pinContext'
 import { PicModalContext } from './contexts/picModalContext'
@@ -50,13 +50,13 @@ const PinMapPage = () => {
           zIndex: "1",
         }}
       >
-        <Map
+        <PinHome
           style={{
             position: "absolute",
             zIndex: "1",
             height: "100%"
           }}
-        ></Map>
+        ></PinHome>
       </div>
       </div>
     )

@@ -11,13 +11,13 @@ export const photos = [
 
 export const heatVals = [
   
-    [49.3134, -124.2424, 50, "Giant Pacific Octopus", 8],
-    [50.846, -127.643, 10, "Chimera", 7],
-    [49.217, -123.893, 30, "Brittle Star", 9],
-    [49.5615, -123.236944, 40, "Flavillinea", 3],
-    [49.3714, -123.2925, 20, "Dog Fish", 5],
-    [50.1325, -125.336, 30, "Basket Star", 11],
-    [49.4495, -123.2405, 20, "Grunt Sculpin", 2],
+    {lat: 49.3134, lng: -124.2424, weight: 50, animal: "Giant Pacific Octopus", month: 8},
+    {lat: 50.846, lng: -127.643, weight: 10, animal: "Chimera", month: 7},
+    {lat: 49.217, lng: -123.893, weight: 30, animal: "Brittle Star", month: 9},
+    {lat: 49.5615, lng: -123.236944, weight: 40, animal: "Flavillinea", month: 3},
+    {lat: 49.3714, lng: -123.2925, weight: 20, animal: "Dog Fish", month: 5},
+    {lat: 50.1325, lng: -125.336, weight: 30, animal: "Basket Star", month: 11},
+    {lat: 49.4495, lng: -123.2405, weight: 20, animal: "Grunt Sculpin", month: 2},
 ]
 
 export const diveSites = [

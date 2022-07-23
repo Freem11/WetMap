@@ -4,12 +4,15 @@ import {
   useLoadScript,
   Marker,
   HeatmapLayer,
+  useGoogleMap,
 } from "@react-google-maps/api";
 import "./googleMap.css";
 import { diveSites } from "./data/testdata";
 import anchorIcon from "../images/anchor11.png";
 import { Satellite } from "@mui/icons-material";
-import { useMemo } from "react";
+import { useMemo, useState, useContext, useCallback, useRef, useEffect } from "react";
+import { CoordsContext } from './contexts/mapCoordsContext'
+import { ZoomContext } from './contexts/mapZoomContext'
 
 
 export default function Home() {
@@ -24,6 +27,8 @@ export default function Home() {
 
 
 function Map() {
+
+
   const gHeatVals = [
     { location: new google.maps.LatLng(50.846, -127.643), weight: 10 },
     { location: new google.maps.LatLng(49.217, -123.893), weight: 20 },
@@ -46,13 +51,44 @@ function Map() {
   }));
 
 
+  const [mapRef, setMapRef] = useState(null)
+ 
+  const handleOnLoad = map => {
+    setMapRef(map)
+  }
+
+  let timoutHanlder;
+
+  const handleMapCenterChange = () => {
+    if (mapRef) {
+      window.clearTimeout(timoutHanlder)
+      timoutHanlder = window.setTimeout(function(){
+        //set state here
+        const newCenter = mapRef.getCenter()
+        console.log("yikes", newCenter.lat(), newCenter.lng())
+
+      },50)
+    
+    }
+  }
+
+  const handleMapZoomChange = () => {
+    if (mapRef) {
+       //set state here
+      const newZoom = mapRef.getZoom()
+      console.log("yikes", newZoom)
+    }
+  }
+
   return (
     <GoogleMap
       zoom={10}
       center={{ lat: 49.246292, lng: -123.116226 }}
       mapContainerClassName="map-container"
       options={options}
-      
+      onLoad={handleOnLoad}
+      onCenterChanged={handleMapCenterChange}
+      onZoomChanged={handleMapZoomChange}
     >
       <HeatmapLayer 
       data={gHeatVals} 

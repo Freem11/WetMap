@@ -37,7 +37,7 @@ export default function GeoCoder() {
 
   return (
     <Form onSubmit={handleSubmit}>
-    <TextField id="standard-basic" label="Go to..." variant="standard" onChange={handleChange} value={formVal} sx={{marginLeft: "20px", width: "80%", backgroundColor: "white"}}/>
+    <TextField id="standard-basic" label="Go to..." variant="standard" onChange={handleChange} value={formVal} sx={{marginLeft: "20px", width: "80%", backgroundColor: "white", opacity: "70%", width: '50%', borderRadius: "20px", paddingLeft: "20px"}}/>
     </Form>
   );
 }

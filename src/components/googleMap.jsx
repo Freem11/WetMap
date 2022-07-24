@@ -21,7 +21,9 @@ import {
 import { CoordsContext } from "./contexts/mapCoordsContext";
 import { ZoomContext } from "./contexts/mapZoomContext";
 import { JumpContext } from "./contexts/jumpContext";
+import { DiveSitesContext } from "./contexts/diveSitesContext";
 import { dataParams, filterSites } from "../helpers/mapHelpers";
+
 
 export default function Home() {
   const { isLoaded } = useLoadScript({
@@ -37,6 +39,7 @@ function Map() {
   const { mapCoords, setMapCoords } = useContext(CoordsContext);
   const { mapZoom, setMapZoom } = useContext(ZoomContext);
   const { jump, setJump } = useContext(JumpContext);
+  const { divesTog, setDivesTog } = useContext(DiveSitesContext);
 
   const [newSites, setnewSites] = useState(diveSites);
   const [heatpts, setHeatPts] = useState(formatHeatVals(heatVals));
@@ -48,6 +51,7 @@ function Map() {
   let timoutHanlder;
   let newParams;
   let heatSlice;
+  let SwtchDives;
 
   function formatHeatVals(heatValues) {
       let newArr = []
@@ -74,8 +78,14 @@ function Map() {
     setMapCoords([center.lat, center.lng]);
     setMapZoom(zoom);
 
+    if (!divesTog) {
+      SwtchDives =  []
+    } else {
+      SwtchDives = diveSites
+    }
+
     newParams = dataParams(mapZoom, mapCoords[0], mapCoords[1]);
-    setnewSites(filterSites(newParams, diveSites));
+    setnewSites(filterSites(newParams, SwtchDives));
 
     heatSlice = filterSites(newParams, heatVals)
     setHeatPts(formatHeatVals(heatSlice))
@@ -94,8 +104,14 @@ function Map() {
         const newCenter = mapRef.getCenter();
         setMapCoords([newCenter.lat(), newCenter.lng()]);
 
+        if (!divesTog) {
+          SwtchDives =  []
+        } else {
+          SwtchDives = diveSites
+        }
+
         newParams = dataParams(mapZoom, mapCoords[0], mapCoords[1]);
-        setnewSites(filterSites(newParams, diveSites));
+        setnewSites(filterSites(newParams, SwtchDives));
 
         heatSlice = filterSites(newParams, heatVals)
         setHeatPts(formatHeatVals(heatSlice))
@@ -109,8 +125,14 @@ function Map() {
       const newZoom = mapRef.getZoom();
       setMapZoom(newZoom);
 
+      if (!divesTog) {
+        SwtchDives =  []
+      } else {
+        SwtchDives = diveSites
+      }
+
       newParams = dataParams(mapZoom, mapCoords[0], mapCoords[1]);
-      setnewSites(filterSites(newParams, diveSites));
+      setnewSites(filterSites(newParams, SwtchDives));
 
       heatSlice = filterSites(newParams, heatVals)
       setHeatPts(formatHeatVals(heatSlice))
@@ -128,13 +150,36 @@ function Map() {
 
 
   useEffect(() => {
+
+    if (!divesTog) {
+      SwtchDives =  []
+    } else {
+      SwtchDives = diveSites
+    }
+
     newParams = dataParams(mapZoom, mapCoords[0], mapCoords[1]);
-    setnewSites(filterSites(newParams, diveSites));
+    setnewSites(filterSites(newParams, SwtchDives));
 
     heatSlice = filterSites(newParams, heatVals)
     setHeatPts(formatHeatVals(heatSlice))
 
   }, [mapCoords])
+
+  useEffect(() => {
+
+    if (!divesTog) {
+      SwtchDives =  []
+    } else {
+      SwtchDives = diveSites
+    }
+
+    newParams = dataParams(mapZoom, mapCoords[0], mapCoords[1]);
+    setnewSites(filterSites(newParams, SwtchDives));
+
+    heatSlice = filterSites(newParams, heatVals)
+    setHeatPts(formatHeatVals(heatSlice))
+
+  }, [divesTog])
  
   return (
     <GoogleMap

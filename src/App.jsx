@@ -11,7 +11,7 @@ import { CoordsContext } from "./components/contexts/mapCoordsContext";
 import { PinContext } from "./components/contexts/pinContext";
 import { PicModalContext } from "./components/contexts/picModalContext";
 import { JumpContext } from "./components/contexts/jumpContext";
-import { useContext } from "react";
+import { DiveSitesContext } from "./components/contexts/diveSitesContext";
 
 function App() {
   
@@ -25,6 +25,8 @@ function App() {
   const [modal, setModal] = useState(false);
   const [jump, setJump] = useState(false);
 
+  const [divesTog, setDivesTog] = useState(true);
+
   const [pin, setPin] = useState({
     PicFile: "",
     Animal: "",
@@ -35,9 +37,6 @@ function App() {
 
   console.log("??", sliderVal);
   console.log("!!", animalVal);
-
-  console.log("AAA", mapCoords);
-  console.log("ZZZ", mapZoom);
 
   console.log("###", pin);
 
@@ -50,12 +49,14 @@ function App() {
               <PinContext.Provider value={{ pin, setPin }}>
                 <PicModalContext.Provider value={{ modal, setModal }}>
                   <JumpContext.Provider value={{jump, setJump}}>
+                    <DiveSitesContext.Provider value={{divesTog, setDivesTog}}>
                   <BrowserRouter>
                     <Routes>
                       <Route path="/" element={<MapPage />} />
                       <Route path="/pinDrop" element={<PinMapPage />} />
                     </Routes>
                   </BrowserRouter>
+                  </DiveSitesContext.Provider>
                   </JumpContext.Provider>
                 </PicModalContext.Provider>
               </PinContext.Provider>

@@ -1,19 +1,24 @@
-import Homeo from "./Home"
-import Home from './googleMap'
+import React from "react";
+import Homeo from "./Home";
+import Home from "./googleMap";
 import Map from "./Map";
 import BasicMenu from "./Popup";
 import MonthSlider from "./Slider";
-import GeoCoder from './geoCoder'
+import GeoCoder from "./geoCoder";
 import { useState, useContext } from "react";
-import { AnimalContext } from './contexts/animalContext'
+import { AnimalContext } from "./contexts/animalContext";
+import ToggleButton from "@mui/material/ToggleButton";
+import AnchorIcon from "@mui/icons-material/Anchor";
+import { DiveSitesContext } from "./contexts/diveSitesContext";
 
 const MapPage = () => {
+  const { animalVal } = useContext(AnimalContext);
 
-  const { animalVal } = useContext(AnimalContext)
+  const { divesTog, setDivesTog } = useContext(DiveSitesContext);
 
-    return(
-        <div>
-        <div
+  return (
+    <div>
+      <div
         style={{
           display: "flex",
           flexDirection: "row",
@@ -22,8 +27,8 @@ const MapPage = () => {
           marginLeft: "10%",
           top: "5px",
           zIndex: "2",
-        }}>
-
+        }}
+      >
         <div
           style={{
             width: "90%",
@@ -44,13 +49,29 @@ const MapPage = () => {
           <GeoCoder />
         </div>
 
+        <ToggleButton
+          sx={{
+            "&.Mui-selected": { backgroundColor: "palegreen" },
+            "&.Mui-selected:hover": { backgroundColor: "palegreen" },
+            "&:hover": { backgroundColor: "lightgrey" },
+            backgroundColor: "lightgrey",height:"40px", width:'40px', border: "2px solid black"
+          }}
+          value="check"
+          selected={divesTog}
+          onChange={() => {
+            setDivesTog(!divesTog);
+          }}
+        >
+          <AnchorIcon />
+        </ToggleButton>
+
         <div
           style={{
             width: "auto",
             position: "relative",
             zIndex: "2",
             marginRight: "10px",
-            maxWidth: "10px"
+            maxWidth: "10px",
           }}
         >
           <BasicMenu />
@@ -64,10 +85,10 @@ const MapPage = () => {
           zIndex: "2",
           top: "94%",
           marginLeft: "20px",
-          maxWidth: "80px"
+          maxWidth: "80px",
         }}
       >
-        <Homeo/>
+        <Homeo />
       </div>
 
       <div
@@ -79,7 +100,7 @@ const MapPage = () => {
           left: "4%",
           marginRight: "20px",
           maxWidth: "500px",
-          backgroundColor: "white"
+          backgroundColor: "white",
         }}
       >
         Target: {animalVal}
@@ -96,14 +117,12 @@ const MapPage = () => {
           style={{
             position: "absolute",
             zIndex: "1",
-            height: "100%"
+            height: "100%",
           }}
         ></Home>
       </div>
-      </div>
-    )
-
-
-}
+    </div>
+  );
+};
 
 export default MapPage;

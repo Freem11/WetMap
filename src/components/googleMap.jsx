@@ -9,7 +9,7 @@ import {
 import "./googleMap.css";
 import { diveSites, heatVals } from "./data/testdata";
 import anchorIcon from "../images/anchor11.png";
-import { Satellite } from "@mui/icons-material";
+import { Satellite, LastPage } from "@mui/icons-material";
 import {
   useMemo,
   useState,
@@ -20,6 +20,7 @@ import {
 } from "react";
 import { CoordsContext } from "./contexts/mapCoordsContext";
 import { ZoomContext } from "./contexts/mapZoomContext";
+import { JumpContext } from "./contexts/jumpContext";
 import { dataParams, filterSites } from "../helpers/mapHelpers";
 
 export default function Home() {
@@ -35,6 +36,7 @@ export default function Home() {
 function Map() {
   const { mapCoords, setMapCoords } = useContext(CoordsContext);
   const { mapZoom, setMapZoom } = useContext(ZoomContext);
+  const { jump, setJump } = useContext(JumpContext);
 
   const [newSites, setnewSites] = useState(diveSites);
   const [heatpts, setHeatPts] = useState(formatHeatVals(heatVals));
@@ -79,11 +81,13 @@ function Map() {
     setHeatPts(formatHeatVals(heatSlice))
   }, []);
 
+
   const handleOnLoad = (map) => {
     setMapRef(map);
   };
 
   const handleMapCenterChange = () => {
+
     if (mapRef) {
       window.clearTimeout(timoutHanlder);
       timoutHanlder = window.setTimeout(function () {
@@ -113,7 +117,25 @@ function Map() {
 
     }
   };
+  
+  useEffect(() => {
+    if (jump){
+      mapRef.panTo(mapCoords)
+      console.log(mapCoords, mapZoom)
+      setJump(!jump)
+    } 
+  }, [jump])
 
+
+  useEffect(() => {
+    newParams = dataParams(mapZoom, mapCoords[0], mapCoords[1]);
+    setnewSites(filterSites(newParams, diveSites));
+
+    heatSlice = filterSites(newParams, heatVals)
+    setHeatPts(formatHeatVals(heatSlice))
+
+  }, [mapCoords])
+ 
   return (
     <GoogleMap
       zoom={zoom}

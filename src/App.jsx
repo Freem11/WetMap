@@ -10,11 +10,11 @@ import { ZoomContext } from "./components/contexts/mapZoomContext";
 import { CoordsContext } from "./components/contexts/mapCoordsContext";
 import { PinContext } from "./components/contexts/pinContext";
 import { PicModalContext } from "./components/contexts/picModalContext";
+import { JumpContext } from "./components/contexts/jumpContext";
+import { useContext } from "react";
 
 function App() {
-  const [count, setCount] = useState(0);
-  const [searchParams, setSearchParams] = useState("");
-
+  
   const d = new Date();
   const [sliderVal, setSliderVal] = useState(d.getMonth());
   const [animalVal, setAnimalVal] = useState("None");
@@ -23,6 +23,7 @@ function App() {
   const [mapZoom, setMapZoom] = useState(10);
 
   const [modal, setModal] = useState(false);
+  const [jump, setJump] = useState(false);
 
   const [pin, setPin] = useState({
     PicFile: "",
@@ -48,12 +49,14 @@ function App() {
             <CoordsContext.Provider value={{ mapCoords, setMapCoords }}>
               <PinContext.Provider value={{ pin, setPin }}>
                 <PicModalContext.Provider value={{ modal, setModal }}>
+                  <JumpContext.Provider value={{jump, setJump}}>
                   <BrowserRouter>
                     <Routes>
                       <Route path="/" element={<MapPage />} />
                       <Route path="/pinDrop" element={<PinMapPage />} />
                     </Routes>
                   </BrowserRouter>
+                  </JumpContext.Provider>
                 </PicModalContext.Provider>
               </PinContext.Provider>
             </CoordsContext.Provider>

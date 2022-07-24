@@ -3,6 +3,7 @@ import Home from './googleMap'
 import Map from "./Map";
 import BasicMenu from "./Popup";
 import MonthSlider from "./Slider";
+import GeoCoder from './geoCoder'
 import { useState, useContext } from "react";
 import { AnimalContext } from './contexts/animalContext'
 
@@ -31,6 +32,16 @@ const MapPage = () => {
           }}
         >
           <MonthSlider />
+        </div>
+
+        <div
+          style={{
+            width: "90%",
+            position: "relative",
+            zIndex: "2",
+          }}
+        >
+          <GeoCoder />
         </div>
 
         <div

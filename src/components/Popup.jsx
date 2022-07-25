@@ -77,9 +77,9 @@ export default function BasicMenu() {
           sx={{
             marginTop: "3px",
             color: "black",
-            height: "40px",
-            width: "30px",
-            maxWidth: "30px",
+            height: "50px",
+            width: "40px",
+            maxWidth: "40px",
             backgroundColor: "white",
             borderRadius: "5px",
             border: "2px solid gray",

@@ -1,0 +1,57 @@
+
+
+.col2rowT {
+    width: 80%;
+    position: absolute;
+    z-Index: 2;
+    margin-left: 190px;
+    margin-right: 480px;
+    background-color: white;
+    opacity: 80%;
+    border-radius: 10px;
+}
+
+.col3rowT {
+    width: 50px;
+    position: absolute;
+    z-Index: 2;
+    right: 14px;
+    top: 100px
+}
+
+.col1row2 {
+    width: 200px;
+    z-index: 2;
+    position: absolute;
+    top: 110px;
+    left: 15px 
+}
+
+.col1row3 {
+    width: 50px;
+    z-index: 2;
+    position: absolute;
+    top: 180px;
+    left: 10px
+}
+
+
+
+.col1rowB{
+    width: 145px;
+    z-index: 2;
+    position: absolute;
+    bottom: 0px;
+}
+
+.col2rowB{
+    width: 60%;
+    height: 50px;
+    z-index: 2;
+    position: absolute;
+    bottom: -30px;
+    left: 170px;
+    background-color: white;
+    opacity: 80%;
+    border-radius: 5px;
+}

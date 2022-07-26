@@ -6,8 +6,10 @@ import {
   useGoogleMap,
 } from "@react-google-maps/api";
 import "./googleMap.css";
+import useSupercluster from "use-supercluster";
 import { diveSites } from "./data/testdata";
 import anchorIcon from "../images/anchor11.png";
+import anchorClust from "../images/anchor3.png";
 import whale from "../images/icons8-spouting-whale-36.png"
 import { Satellite } from "@mui/icons-material";
 import {
@@ -36,6 +38,7 @@ function PinMap() {
   const { mapCoords, setMapCoords } = useContext(CoordsContext);
   const { mapZoom, setMapZoom } = useContext(ZoomContext);
   const { pin, setPin } = useContext(PinContext)
+  const [boundaries, setBoundaries] = useState(null);
 
   const [newSites, setnewSites] = useState(diveSites);
   const [mapRef, setMapRef] = useState(null);
@@ -47,6 +50,7 @@ function PinMap() {
   const pinCenter = useMemo(() => ({lat: mapCoords[0], lng: mapCoords[1]}), []);
 
   let timoutHanlder;
+  let timoutHandler;
   let newParams;
 
   const options = useMemo(() => ({
@@ -91,6 +95,36 @@ function PinMap() {
     }
   };
 
+  const handleBoundsChange = () => {
+    if (mapRef) {
+      window.clearTimeout(timoutHandler);
+      timoutHandler = window.setTimeout(function () {
+        const newBounds = mapRef.getBounds();
+        let NW = { lat: newBounds.vb.hi, lng: newBounds.Ra.lo };
+        let SE = { lat: newBounds.vb.lo, lng: newBounds.Ra.hi };
+        console.log("boundaries are:", NW, SE);
+        setBoundaries([
+          newBounds.Ra.lo,
+          newBounds.vb.lo,
+          newBounds.Ra.hi,
+          newBounds.vb.hi,
+        ]);
+
+        if (!divesTog) {
+          SwtchDives = [];
+        } else {
+          SwtchDives = diveSites;
+        }
+
+        newParams = dataParams(mapZoom, mapCoords[0], mapCoords[1]);
+        setnewSites(filterSites(newParams, SwtchDives));
+
+        heatSlice = filterSites(newParams, heatVals);
+        setHeatPts(formatHeatVals(heatSlice));
+      });
+    }
+  };
+
   const handlePinLoad = (marker) => {
     setPinRef(marker);
   };
@@ -105,6 +139,23 @@ function PinMap() {
     }
   };
 
+  const points = newSites.map((site) => ({
+    type: "Feature",
+    properties: {
+      cluster: false,
+      siteID: site.name,
+      category: "Dive Site",
+    },
+    geometry: { type: "Point", coordinates: [site.lng, site.lat] },
+  }));
+
+  const { clusters, supercluster } = useSupercluster({
+    points,
+    bounds: boundaries,
+    zoom: mapZoom,
+    options: { radius: 75, maxZoom: 12 },
+  });
+
   return (
     <GoogleMap
       zoom={zoom}
@@ -114,17 +165,43 @@ function PinMap() {
       onLoad={handleOnLoad}
       onCenterChanged={handleMapCenterChange}
       onZoomChanged={handleMapZoomChange}
+      onBoundsChanged={handleBoundsChange}
     >
 
-      {newSites &&
-        newSites.map((dataLoc) => (
+{clusters.map((cluster) => {
+        const [longitude, latitude] = cluster.geometry.coordinates;
+        const { cluster: isCluster, point_count: pointCount } =
+          cluster.properties;
+
+        if (isCluster) {
+          return (
+            <Marker 
+              key={cluster.properties.siteID} 
+              position={{ lat: latitude, lng: longitude }}
+              title={pointCount.toString() + " sites"}
+              icon={anchorClust}
+              >
+              <div
+                style={{
+                  width: `${10 + (pointCount / points.length) * 30}px`,
+                  height: `${10 + (pointCount / points.length) * 30}px`,
+                  backgroundColor: "lightblue"
+                }}
+              >
+                {pointCount}
+              </div>
+            </Marker>
+          );
+        }
+        return (
           <Marker
-            key={dataLoc.name}
-            position={{ lat: dataLoc.lat, lng: dataLoc.lng }}
+            key={cluster.properties.siteID}
+            position={{ lat: latitude, lng: longitude }}
             icon={anchorIcon}
-            title={dataLoc.name}
+            title={cluster.properties.siteID}
           ></Marker>
-        ))}
+        );
+      })}
 
         <Marker
          position={pinCenter}

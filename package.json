@@ -30,6 +30,7 @@
     "react-leaflet-heatmap-layer-v3": "^3.0.3-beta-1",
     "react-router-dom": "^6.3.0",
     "reactstrap": "^9.1.1",
+    "use-supercluster": "^0.4.0",
     "yarn": "^1.22.19"
   },
   "devDependencies": {

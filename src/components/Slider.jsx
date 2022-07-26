@@ -65,7 +65,7 @@ function valuetext(value) {
     return (
         <Box
             sx={{
-                width: '80%',
+                width: '95%',
                 mx: 'auto',
 
             }}>

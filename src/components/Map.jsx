@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo, useContext, Fragment } from "react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { diveSites, heatVals } from "./data/testdata";
-import anchor from "../images/anchor6.png";
+import anchor from "../images/anchor7.png";
 import { HeatmapLayer } from "react-leaflet-heatmap-layer-v3";
 import L from "leaflet";
 import {dataParams, filterSites} from '../helpers/mapHelpers'

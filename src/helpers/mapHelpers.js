@@ -102,4 +102,27 @@ function filterSites(newParams, array) {
   });
   return newArr;
 }
-export { dataParams, filterSites };
+
+function filterHeat(month, animal,  array) {
+
+let actualMonth = month + 1
+
+  let newArr = [];
+  array.forEach((heatDot) => {
+    if (animal === 'None') {
+      console.log("getting right?", heatDot)
+      if (heatDot.month === actualMonth ) {
+        console.log("getting here?", heatDot)
+        newArr.push(heatDot);
+      }
+    } else {
+      if (heatDot.month === actualMonth & heatDot.animal === animal) {
+        newArr.push(heatDot);
+      }
+    }  
+  });
+  console.log("returing more", actualMonth, animal, array)
+  console.log("returing", newArr)
+  return newArr;
+}
+export { dataParams, filterSites, filterHeat };

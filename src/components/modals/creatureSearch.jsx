@@ -51,6 +51,12 @@ const CreatureSearch = (props) => {
       <nav aria-label="secondary mailbox folders">
         <List sx={{backgroundColor: "rgb(221, 226, 226)"}}>
 
+        <ListItem disablePadding>
+            <ListItemButton onClick={handleSubmit} >
+              <ListItemText  primary={"None"} label={"None"}/>
+            </ListItemButton>
+          </ListItem>
+
         {filteredData &&
           filteredData.map((life) => (
             <ListItem disablePadding>

@@ -48,7 +48,7 @@ const MapPage = () => {
 
       
         <div className="col1rowB"><Homeo /></div>
-        <div className="col2rowB">Target: {animalVal}</div>
+        <div className="col2rowB">Want to see: {animalVal}</div>
   
       
 <div>

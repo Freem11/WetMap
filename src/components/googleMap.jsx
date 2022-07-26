@@ -24,7 +24,9 @@ import { CoordsContext } from "./contexts/mapCoordsContext";
 import { ZoomContext } from "./contexts/mapZoomContext";
 import { JumpContext } from "./contexts/jumpContext";
 import { DiveSitesContext } from "./contexts/diveSitesContext";
-import { dataParams, filterSites } from "../helpers/mapHelpers";
+import { SliderContext } from "./contexts/sliderContext"
+import { AnimalContext } from "./contexts/animalContext"
+import { dataParams, filterSites, filterHeat } from "../helpers/mapHelpers";
 
 export default function Home() {
   const { isLoaded } = useLoadScript({
@@ -42,6 +44,8 @@ function Map() {
   const { jump, setJump } = useContext(JumpContext);
   const { divesTog, setDivesTog } = useContext(DiveSitesContext);
   const [boundaries, setBoundaries] = useState(null);
+  const { animalVal } = useContext(AnimalContext);
+  const { sliderVal } = useContext(SliderContext);
 
   const [newSites, setnewSites] = useState(diveSites);
   const [heatpts, setHeatPts] = useState(formatHeatVals(heatVals));
@@ -54,6 +58,7 @@ function Map() {
   let timoutHandler;
   let newParams;
   let heatSlice;
+  let animalSliderHeat;
   let SwtchDives;
 
   function formatHeatVals(heatValues) {
@@ -94,7 +99,9 @@ function Map() {
     setnewSites(filterSites(newParams, SwtchDives));
 
     heatSlice = filterSites(newParams, heatVals);
-    setHeatPts(formatHeatVals(heatSlice));
+    animalSliderHeat = filterHeat(sliderVal, animalVal, heatSlice)
+    console.log("whats this?", animalSliderHeat)
+    setHeatPts(formatHeatVals(animalSliderHeat));
   }, []);
 
   const handleOnLoad = (map) => {
@@ -118,7 +125,9 @@ function Map() {
         setnewSites(filterSites(newParams, SwtchDives));
 
         heatSlice = filterSites(newParams, heatVals);
-        setHeatPts(formatHeatVals(heatSlice));
+        animalSliderHeat = filterHeat(sliderVal, animalVal, heatSlice)
+        console.log("whats this?", animalSliderHeat)
+        setHeatPts(formatHeatVals(animalSliderHeat));
       }, 50);
     }
   };
@@ -138,7 +147,9 @@ function Map() {
       setnewSites(filterSites(newParams, SwtchDives));
 
       heatSlice = filterSites(newParams, heatVals);
-      setHeatPts(formatHeatVals(heatSlice));
+      animalSliderHeat = filterHeat(sliderVal, animalVal, heatSlice)
+      console.log("whats this?", animalSliderHeat)
+      setHeatPts(formatHeatVals(animalSliderHeat));
     }
   };
 
@@ -167,7 +178,9 @@ function Map() {
         setnewSites(filterSites(newParams, SwtchDives));
 
         heatSlice = filterSites(newParams, heatVals);
-        setHeatPts(formatHeatVals(heatSlice));
+        animalSliderHeat = filterHeat(sliderVal, animalVal, heatSlice)
+        console.log("whats this?", animalSliderHeat)
+        setHeatPts(formatHeatVals(animalSliderHeat));
       });
     }
   };
@@ -191,7 +204,9 @@ function Map() {
     setnewSites(filterSites(newParams, SwtchDives));
 
     heatSlice = filterSites(newParams, heatVals);
-    setHeatPts(formatHeatVals(heatSlice));
+    animalSliderHeat = filterHeat(sliderVal, animalVal, heatSlice)
+    console.log("whats this?", animalSliderHeat)
+    setHeatPts(formatHeatVals(animalSliderHeat));
   }, [mapCoords]);
 
   useEffect(() => {
@@ -205,8 +220,10 @@ function Map() {
     setnewSites(filterSites(newParams, SwtchDives));
 
     heatSlice = filterSites(newParams, heatVals);
-    setHeatPts(formatHeatVals(heatSlice));
-  }, [divesTog]);
+    animalSliderHeat = filterHeat(sliderVal, animalVal, heatSlice)
+    console.log("whats this?", animalSliderHeat)
+    setHeatPts(formatHeatVals(animalSliderHeat));
+  }, [divesTog, sliderVal, animalVal]);
 
   const points = newSites.map((site) => ({
     type: "Feature",

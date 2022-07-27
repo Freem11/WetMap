@@ -20,7 +20,6 @@
 }
 
 .col1row2 {
-    /* width: 200px; */
     z-index: 2;
     position: absolute;
     top: 110px;
@@ -28,10 +27,17 @@
 }
 
 .col1row3 {
+    z-index: 2;
+    position: absolute;
+    top: 170px;
+    left: 15px;
+}
+
+.col1row4 {
     width: 50px;
     z-index: 2;
     position: absolute;
-    top: 180px;
+    top: 233px;
     left: 10px
 }
 

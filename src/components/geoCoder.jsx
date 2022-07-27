@@ -39,21 +39,38 @@ export default function GeoCoder() {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <TextField
-        id="standard-basic"
-        label="Go to..."
-        variant="standard"
-        onChange={handleChange}
-        value={formVal}
-        sx={{
-          height: "auto",
-          width: "100%",
-          backgroundColor: "white",
-          opacity: "70%",
-          borderRadius: "10px",
-        }}
-      />
-    </Form>
+    <div
+      style={{
+        "&.selected" : {opacity: "80%"},
+        "&.selected:hover" : {opacity: "80%"},
+        "&:hover" : {opacity: "80%"},
+        backgroundColor: "white",
+        width: "240px",
+        opacity: "70%",
+        borderRadius: "10px",
+        paddingTop: "2px",
+      }}
+    >
+      <Form onSubmit={handleSubmit} style={{ width: "240px" }}>
+        <TextField
+          id="standard-basic"
+          label="Go to..."
+          variant="standard"
+          onChange={handleChange}
+          value={formVal}
+          sx={{
+            "&.Mui-selected": { opacity: "80%" },
+            "&.Mui-selected:hover": { opacity: "80%" },
+            "&:hover": { opacity: "80%" },
+            height: "auto",
+            width: "230px",
+            backgroundColor: "white",
+            opacity: "70%",
+            borderRadius: "10px",
+            marginLeft: "10px",
+          }}
+        />
+      </Form>
+    </div>
   );
 }

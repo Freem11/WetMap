@@ -3,12 +3,10 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import MenuIcon from "@mui/icons-material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import AnchorIcon from "@mui/icons-material/Anchor";
 import FormModal from "./modals/formModal";
 import PicUploader from "./modals/picUploader";
-import CreatureSearch from "./modals/creatureSearch";
 import SiteSubmitter from "./modals/siteSubmitter";
 import { PicModalContext } from "./contexts/picModalContext";
 import { PinContext } from "../components/contexts/pinContext";
@@ -31,8 +29,6 @@ export default function BasicMenu() {
     });
   };
 
-  const [modal2, setModal2] = useState(false);
-
   const { modal, setModal } = useContext(PicModalContext);
 
   const [modal3, setModal3] = useState(false);
@@ -41,21 +37,12 @@ export default function BasicMenu() {
     setModal(!modal);
   };
 
-  const toggleModal2 = () => {
-    setModal2(!modal2);
-  };
-
   const toggleModal3 = () => {
     setModal3(!modal3);
   };
 
   const doBoth = () => {
     toggleModal();
-    handleClose();
-  };
-
-  const doTwo = () => {
-    toggleModal2();
     handleClose();
   };
 
@@ -100,9 +87,7 @@ export default function BasicMenu() {
           horizontal: "right",
         }}
       >
-        <MenuItem onClick={doTwo} sx={{ height: "40px" }}>
-          <SearchIcon />
-        </MenuItem>
+
         <MenuItem onClick={doBoth} sx={{ height: "40px" }}>
           <PhotoCameraIcon />
         </MenuItem>
@@ -113,10 +98,6 @@ export default function BasicMenu() {
 
       <FormModal openup={modal} closeup={toggleModal}>
         <PicUploader closeup={toggleModal} />
-      </FormModal>
-
-      <FormModal openup={modal2} closeup={toggleModal2}>
-        <CreatureSearch closeup={toggleModal2} />
       </FormModal>
 
       <FormModal openup={modal3} closeup={toggleModal3}>

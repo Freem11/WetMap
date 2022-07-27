@@ -100,7 +100,6 @@ function Map() {
 
     heatSlice = filterSites(newParams, heatVals);
     animalSliderHeat = filterHeat(sliderVal, animalVal, heatSlice)
-    console.log("whats this?", animalSliderHeat)
     setHeatPts(formatHeatVals(animalSliderHeat));
   }, []);
 
@@ -126,7 +125,6 @@ function Map() {
 
         heatSlice = filterSites(newParams, heatVals);
         animalSliderHeat = filterHeat(sliderVal, animalVal, heatSlice)
-        console.log("whats this?", animalSliderHeat)
         setHeatPts(formatHeatVals(animalSliderHeat));
       }, 50);
     }
@@ -148,7 +146,6 @@ function Map() {
 
       heatSlice = filterSites(newParams, heatVals);
       animalSliderHeat = filterHeat(sliderVal, animalVal, heatSlice)
-      console.log("whats this?", animalSliderHeat)
       setHeatPts(formatHeatVals(animalSliderHeat));
     }
   };
@@ -158,13 +155,11 @@ function Map() {
       window.clearTimeout(timoutHandler);
       timoutHandler = window.setTimeout(function () {
         const newBounds = mapRef.getBounds();
-        let NW = { lat: newBounds.vb.hi, lng: newBounds.Ra.lo };
-        let SE = { lat: newBounds.vb.lo, lng: newBounds.Ra.hi };
-        console.log("boundaries are:", NW, SE);
+        // console.log("boundaries are:", newBounds);
         setBoundaries([
-          newBounds.Ra.lo,
+          newBounds.Sa.lo,
           newBounds.vb.lo,
-          newBounds.Ra.hi,
+          newBounds.Sa.hi,
           newBounds.vb.hi,
         ]);
 
@@ -179,7 +174,6 @@ function Map() {
 
         heatSlice = filterSites(newParams, heatVals);
         animalSliderHeat = filterHeat(sliderVal, animalVal, heatSlice)
-        console.log("whats this?", animalSliderHeat)
         setHeatPts(formatHeatVals(animalSliderHeat));
       });
     }
@@ -205,7 +199,6 @@ function Map() {
 
     heatSlice = filterSites(newParams, heatVals);
     animalSliderHeat = filterHeat(sliderVal, animalVal, heatSlice)
-    console.log("whats this?", animalSliderHeat)
     setHeatPts(formatHeatVals(animalSliderHeat));
   }, [mapCoords]);
 
@@ -221,7 +214,6 @@ function Map() {
 
     heatSlice = filterSites(newParams, heatVals);
     animalSliderHeat = filterHeat(sliderVal, animalVal, heatSlice)
-    console.log("whats this?", animalSliderHeat)
     setHeatPts(formatHeatVals(animalSliderHeat));
   }, [divesTog, sliderVal, animalVal]);
 

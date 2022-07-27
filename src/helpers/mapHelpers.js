@@ -110,9 +110,7 @@ let actualMonth = month + 1
   let newArr = [];
   array.forEach((heatDot) => {
     if (animal === 'None') {
-      console.log("getting right?", heatDot)
       if (heatDot.month === actualMonth ) {
-        console.log("getting here?", heatDot)
         newArr.push(heatDot);
       }
     } else {
@@ -121,8 +119,6 @@ let actualMonth = month + 1
       }
     }  
   });
-  console.log("returing more", actualMonth, animal, array)
-  console.log("returing", newArr)
   return newArr;
 }
 export { dataParams, filterSites, filterHeat };

@@ -1,10 +1,12 @@
 import React from "react";
 import Homeo from "./Home";
 import Home from "./googleMap";
-import Map from "./Map";
+import FormModal from "./modals/formModal";
 import BasicMenu from "./Popup";
 import MonthSlider from "./Slider";
 import GeoCoder from "./geoCoder";
+import PicUploader from "./modals/picUploader";
+import SiteSubmitter from "./modals/siteSubmitter";
 import AnimalSearcher from "./AnimalSearch"
 import { useState, useContext } from "react";
 import ToggleButton from "@mui/material/ToggleButton";
@@ -12,8 +14,11 @@ import Collapse from "@mui/material/Collapse";
 import ExploreIcon from '@mui/icons-material/Explore';
 import SearchIcon from "@mui/icons-material/Search";
 import AnchorIcon from "@mui/icons-material/Anchor";
+import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
+import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
 import { DiveSitesContext } from "./contexts/diveSitesContext";
 import { AnimalContext } from "./contexts/animalContext";
+import { PicModalContext } from "./contexts/picModalContext";
 import "./mapPage.css";
 
 const geoCoderZone = (<div style={{marginLeft:"10px"}}><GeoCoder></GeoCoder></div>);
@@ -24,14 +29,18 @@ const MapPage = () => {
   const { divesTog, setDivesTog } = useContext(DiveSitesContext);
   const [showGeoCoder, setShowGeoCoder] = useState(false);
   const [showAnimalSearch, setShowAnimalSearch] = useState(false);
-  const { animalVal, setAnimalVal } = useContext(AnimalContext);
+  const { animalVal} = useContext(AnimalContext);
   
-  const handleGeoCoderShow = () => {
-    setShowGeoCoder((prev) => !prev);
+  const { picModal, setPicModal } = useContext(PicModalContext);
+
+  const togglePicModal = () => {
+    setPicModal(!picModal);
   };
 
-  const handleAnimalSearchShow = () => {
-    setShowAnimalSearch((prev) => !prev);
+  const [diveSiteModal, setDiveSiteModal] = useState(false);
+
+  const toggleAddDiveSiteModal = () => {
+    setDiveSiteModal(!diveSiteModal);
   };
 
   return (
@@ -109,9 +118,45 @@ const MapPage = () => {
         </ToggleButton>
         </div>
 
+        <div className="col1row5"><ToggleButton
+          sx={{
+            "&.Mui-selected": { backgroundColor: "orange" },
+            "&.Mui-selected:hover": { backgroundColor: "orange" },
+            "&:hover": { backgroundColor: "lightgrey" },
+            backgroundColor: "lightgrey",
+            height: "40px",
+            width: "40px",
+            border: "2px solid black",
+          }}
+          value="check"
+          selected={picModal}
+          onChange={() => {
+            setPicModal(togglePicModal);
+          }}
+        >
+          <PhotoCameraIcon />
+        </ToggleButton></div>
+
+      <div className="col1row6"><ToggleButton
+          sx={{
+            "&.Mui-selected": { backgroundColor: "violet" },
+            "&.Mui-selected:hover": { backgroundColor: "violet" },
+            "&:hover": { backgroundColor: "lightgrey" },
+            backgroundColor: "lightgrey",
+            height: "40px",
+            width: "40px",
+            border: "2px solid black",
+          }}
+          value="check"
+          selected={diveSiteModal}
+          onChange={() => {
+            setDiveSiteModal(toggleAddDiveSiteModal);
+          }}
+        >
+          <AddLocationAltIcon />
+        </ToggleButton></div>
 
 
-      <div className="col3row3"></div>
 
       <div className="col1rowB">
         <Homeo />
@@ -127,8 +172,18 @@ const MapPage = () => {
           }}
         ></Home>
       </div>
+
+      <FormModal openup={picModal} closeup={togglePicModal}>
+        <PicUploader closeup={togglePicModal} />
+      </FormModal>
+
+      <FormModal openup={diveSiteModal} closeup={toggleAddDiveSiteModal}>
+        <SiteSubmitter closeup={toggleAddDiveSiteModal} />
+      </FormModal>
     </div>
+
   );
+
 };
 
 export default MapPage;

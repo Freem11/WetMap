@@ -22,7 +22,7 @@ function App() {
   const [mapCoords, setMapCoords] = useState([49.246292, -123.116226]);
   const [mapZoom, setMapZoom] = useState(10);
 
-  const [modal, setModal] = useState(false);
+  const [picModal, setPicModal] = useState(false);
   const [jump, setJump] = useState(false);
 
   const [divesTog, setDivesTog] = useState(true);
@@ -35,9 +35,6 @@ function App() {
     Longitude: "",
   });
 
-  console.log("??", sliderVal);
-  console.log("!!", animalVal);
-
   console.log("###", pin);
 
   return (
@@ -47,7 +44,7 @@ function App() {
           <ZoomContext.Provider value={{ mapZoom, setMapZoom }}>
             <CoordsContext.Provider value={{ mapCoords, setMapCoords }}>
               <PinContext.Provider value={{ pin, setPin }}>
-                <PicModalContext.Provider value={{ modal, setModal }}>
+                <PicModalContext.Provider value={{ picModal, setPicModal }}>
                   <JumpContext.Provider value={{jump, setJump}}>
                     <DiveSitesContext.Provider value={{divesTog, setDivesTog}}>
                   <BrowserRouter>

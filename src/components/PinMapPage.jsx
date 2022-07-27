@@ -10,10 +10,10 @@ const PinMapPage = () => {
 
   let navigate = useNavigate();
   const { pin, setPin } = useContext(PinContext)
-  const { modal, setModal } = useContext(PicModalContext)
+  const { picModal, setPicModal } = useContext(PicModalContext)
 
   const navi= () => {
-    setModal(true)
+    setPicModal(true)
     navigate("/")
   }
  

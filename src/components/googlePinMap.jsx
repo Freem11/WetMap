@@ -100,13 +100,11 @@ function PinMap() {
       window.clearTimeout(timoutHandler);
       timoutHandler = window.setTimeout(function () {
         const newBounds = mapRef.getBounds();
-        let NW = { lat: newBounds.vb.hi, lng: newBounds.Ra.lo };
-        let SE = { lat: newBounds.vb.lo, lng: newBounds.Ra.hi };
-        console.log("boundaries are:", NW, SE);
+        // console.log("boundaries are:", newBounds);
         setBoundaries([
-          newBounds.Ra.lo,
+          newBounds.Sa.lo,
           newBounds.vb.lo,
-          newBounds.Ra.hi,
+          newBounds.Sa.hi,
           newBounds.vb.hi,
         ]);
 

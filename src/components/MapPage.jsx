@@ -2,7 +2,6 @@ import React from "react";
 import Homeo from "./Home";
 import Home from "./googleMap";
 import FormModal from "./modals/formModal";
-import BasicMenu from "./Popup";
 import MonthSlider from "./Slider";
 import GeoCoder from "./geoCoder";
 import PicUploader from "./modals/picUploader";
@@ -49,7 +48,7 @@ const MapPage = () => {
         <MonthSlider />
       </div>
       <div className="col3rowT">
-        <BasicMenu />
+       
       </div>
 
       <div className="col1row2" style={{display:"flex", flexDirection:"row"}}>

@@ -1,14 +1,12 @@
 import { useState, useContext, useEffect } from "react";
 import { Container, Form, FormGroup, Label, Input } from "reactstrap";
 import "./picUploader.css";
-import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import exifr from "exifr";
 import { useNavigate } from "react-router-dom"; 
 import { PinContext } from '../contexts/pinContext'
 import PlaceIcon from '@mui/icons-material/Place';
-import { height } from "@mui/system";
 
 const PicUploader = (props) => {
   const { closeup } = props;
@@ -138,7 +136,7 @@ const PicUploader = (props) => {
           </Label>
         </div>
 
-        <div className="uploadbox">
+        <div className="uploadbox2">
           <FormGroup>
             <Input
               placeholder="Upload"
@@ -148,13 +146,12 @@ const PicUploader = (props) => {
               type="file"
               name="PicFile"
               bsSize="lg"
-              // value={pin.PicFile}
               onChange={handleChange}
             ></Input>
           </FormGroup>
         </div>
 
-        <div className="inputbox">
+        <div className="inputboxType1">
           <FormGroup>
             <TextField
               id="standard-basic"
@@ -168,7 +165,7 @@ const PicUploader = (props) => {
           </FormGroup>
         </div>
 
-        <div className="inputbox">
+        <div className="inputboxType1">
           <FormGroup>
             <TextField
               id="standard-basic"
@@ -185,7 +182,7 @@ const PicUploader = (props) => {
 
         <div className="Tbox">
           <div>
-            <div className="inputbox">
+            <div className="inputboxType2">
               <FormGroup>
                 <TextField
                   id="standard-basic"
@@ -199,7 +196,7 @@ const PicUploader = (props) => {
               </FormGroup>
             </div>
 
-            <div className="inputbox">
+            <div className="inputboxType2">
               <FormGroup>
                 <TextField
                   id="standard-basic"

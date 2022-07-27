@@ -18,6 +18,22 @@ export const heatVals = [
     {lat: 49.3714, lng: -123.2925, weight: 20, animal: "Dog Fish", month: 5},
     {lat: 50.1325, lng: -125.336, weight: 30, animal: "Basket Star", month: 11},
     {lat: 49.4495, lng: -123.2405, weight: 20, animal: "Grunt Sculpin", month: 2},
+
+    {lat: 49.3134, lng: -124.2424, weight: 40, animal: "Giant Pacific Octopus", month: 9},
+    {lat: 50.846, lng: -127.643, weight: 20, animal: "Chimera", month: 8},
+    {lat: 49.217, lng: -123.893, weight: 40, animal: "Brittle Star", month: 10},
+    {lat: 49.5615, lng: -123.236944, weight: 50, animal: "Flavillinea", month: 4},
+    {lat: 49.3714, lng: -123.2925, weight: 30, animal: "Dog Fish", month: 6},
+    {lat: 50.1325, lng: -125.336, weight: 40, animal: "Basket Star", month: 12},
+    {lat: 49.4495, lng: -123.2405, weight: 30, animal: "Grunt Sculpin", month: 4},
+
+    {lat: 49.3134, lng: -124.2424, weight: 30, animal: "Giant Pacific Octopus", month: 10},
+    {lat: 50.846, lng: -127.643, weight: 30, animal: "Chimera", month: 9},
+    {lat: 49.217, lng: -123.893, weight: 50, animal: "Brittle Star", month: 11},
+    {lat: 49.5615, lng: -123.236944, weight: 40, animal: "Flavillinea", month: 5},
+    {lat: 49.3714, lng: -123.2925, weight: 40, animal: "Dog Fish", month: 7},
+    {lat: 50.1325, lng: -125.336, weight: 50, animal: "Basket Star", month: 1},
+    {lat: 49.4495, lng: -123.2405, weight: 40, animal: "Grunt Sculpin", month: 5},
 ]
 
 export const diveSites = [

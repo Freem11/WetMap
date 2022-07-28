@@ -84,11 +84,7 @@ function Map() {
     setMapCoords([center.lat, center.lng]);
     setMapZoom(zoom);
 
-    if (!divesTog) {
-      SwtchDives = [];
-    } else {
-      SwtchDives = diveSites;
-    }
+    !divesTog ? SwtchDives = [] : SwtchDives = diveSites
 
     DiveSiteAndHeatSpotValue = setupMapValues(
       mapZoom,
@@ -115,11 +111,7 @@ function Map() {
         const newCenter = mapRef.getCenter();
         setMapCoords([newCenter.lat(), newCenter.lng()]);
 
-        if (!divesTog) {
-          SwtchDives = [];
-        } else {
-          SwtchDives = diveSites;
-        }
+        !divesTog ? SwtchDives = [] : SwtchDives = diveSites
 
         DiveSiteAndHeatSpotValue = setupMapValues(
           mapZoom,
@@ -142,11 +134,7 @@ function Map() {
       const newZoom = mapRef.getZoom();
       setMapZoom(newZoom);
 
-      if (!divesTog) {
-        SwtchDives = [];
-      } else {
-        SwtchDives = diveSites;
-      }
+      !divesTog ? SwtchDives = [] : SwtchDives = diveSites
 
       DiveSiteAndHeatSpotValue = setupMapValues(
         mapZoom,
@@ -176,12 +164,8 @@ function Map() {
           newBounds.vb.hi,
         ]);
 
-        if (!divesTog) {
-          SwtchDives = [];
-        } else {
-          SwtchDives = diveSites;
-        }
-
+        !divesTog ? SwtchDives = [] : SwtchDives = diveSites
+     
         DiveSiteAndHeatSpotValue = setupMapValues(
           mapZoom,
           mapCoords[0],
@@ -201,18 +185,14 @@ function Map() {
   useEffect(() => {
     if (jump) {
       mapRef.panTo(mapCoords);
-      console.log(mapCoords, mapZoom);
       setJump(!jump);
     }
   }, [jump]);
 
   useEffect(() => {
-    if (!divesTog) {
-      SwtchDives = [];
-    } else {
-      SwtchDives = diveSites;
-    }
 
+    !divesTog ? SwtchDives = [] : SwtchDives = diveSites
+ 
     DiveSiteAndHeatSpotValue = setupMapValues(
       mapZoom,
       mapCoords[0],
@@ -225,6 +205,7 @@ function Map() {
 
     setnewSites(DiveSiteAndHeatSpotValue[0]);
     setHeatPts(formatHeatVals(DiveSiteAndHeatSpotValue[1]));
+
   }, [mapCoords, divesTog, sliderVal, animalVal]);
 
   const points = setupClusters(newSites)

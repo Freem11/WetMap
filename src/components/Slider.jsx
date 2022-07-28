@@ -73,10 +73,10 @@ function valuetext(value) {
             <Slider sx={{
                 color: 'black',
             }}
+                key={sliderVal}
                 aria-label="Custom marks"
                 defaultValue={sliderVal}
                 getAriaValueText={valuetext}
-                // getAriaLabel={valuelabel}
                 step={1}
                 marks={marks}
                 min={0}

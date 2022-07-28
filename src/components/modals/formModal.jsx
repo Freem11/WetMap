@@ -24,7 +24,7 @@ const FormModal = (props) => {
         <div>
             <Modal
                 open={openup}
-                close={closeup}
+                onClose={closeup}
                 >
                 <Box sx = {style}>
                     <div className="modalBox">

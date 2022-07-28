@@ -58,6 +58,7 @@ export default function MonthSlider() {
 
 const {sliderVal, setSliderVal} = useContext(SliderContext)
 
+
 function valuetext(value) {
     setSliderVal(value)
 }

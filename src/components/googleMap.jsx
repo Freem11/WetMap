@@ -23,6 +23,7 @@ import { DiveSitesContext } from "./contexts/diveSitesContext";
 import { SliderContext } from "./contexts/sliderContext";
 import { AnimalContext } from "./contexts/animalContext";
 import { setupMapValues } from "../helpers/mapHelpers";
+import { setupClusters } from "../helpers/clusterHelpers"
 
 export default function Home() {
   const { isLoaded } = useLoadScript({
@@ -226,16 +227,8 @@ function Map() {
     setHeatPts(formatHeatVals(DiveSiteAndHeatSpotValue[1]));
   }, [mapCoords, divesTog, sliderVal, animalVal]);
 
-  const points = newSites.map((site) => ({
-    type: "Feature",
-    properties: {
-      cluster: false,
-      siteID: site.name,
-      category: "Dive Site",
-    },
-    geometry: { type: "Point", coordinates: [site.lng, site.lat] },
-  }));
-
+  const points = setupClusters(newSites)
+  
   const { clusters, supercluster } = useSupercluster({
     points,
     bounds: boundaries,

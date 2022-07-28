@@ -1,4 +1,4 @@
-export default function setupClusters(diveSiteData) {
+ function setupClusters(diveSiteData) {
 
     let points =  diveSiteData.map((site) => ({
         type: "Feature",
@@ -12,3 +12,5 @@ export default function setupClusters(diveSiteData) {
 
     return points;
   }
+
+export { setupClusters };

@@ -3,7 +3,6 @@ import {
   useLoadScript,
   Marker,
   HeatmapLayer,
-  useGoogleMap,
 } from "@react-google-maps/api";
 import "./googleMap.css";
 import useSupercluster from "use-supercluster";
@@ -18,12 +17,14 @@ import { DiveSitesContext } from "./contexts/diveSitesContext";
 import { SliderContext } from "./contexts/sliderContext";
 import { AnimalContext } from "./contexts/animalContext";
 import { setupMapValues } from "../helpers/mapHelpers";
-import { setupClusters } from "../helpers/clusterHelpers";
+import { setupClusters } from "../helpers/clusterHelpers"
+
+const LIB = ["visualization"]
 
 export default function Home() {
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
-    libraries: ["visualization"],
+    libraries: LIB,
   });
 
   if (!isLoaded) return <div>Loading...</div>;

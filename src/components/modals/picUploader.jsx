@@ -95,11 +95,10 @@ const PicUploader = React.memo((props) => {
               output.GPSLongitude[1] / 60 +
               output.GPSLongitude[2] / 3600;
           }
+          
         } else {
-          setPin({ ...pin, PicFile: fileName, PicDate: moddedDate });
           console.log("No GPS on this one!");
         }
-
         setPin({ ...pin, PicFile: fileName, PicDate: moddedDate, Latitude: lats, Longitude: lngs });
       });
 

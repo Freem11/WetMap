@@ -35,7 +35,7 @@ const HowToGuide = (props) => {
             page.<br></br>
             <br></br>
             Users submit photos of animal and dive sites they have seen/ been to
-            and the app will capture the date he photo was created and if the
+            and the app will capture the date the photo was created and if the
             photo carries them, its GPS coordinates, if not an option is
             available to drop a pin at the location the photo was taken.
           </p>
@@ -63,7 +63,9 @@ const HowToGuide = (props) => {
 
         <div className="rightA">
           <p>
-            Click this icon to change what sea creature you are looking for, this list searched creature that already exist in the system, so add new ones wih your own photos to expand the list!
+            Click this icon to change what sea creature you are looking for, 
+            this list searched creature that already exist in the system, 
+            so add new ones wih your own photos to expand the list!
           </p>
         </div>
       </div>
@@ -75,7 +77,8 @@ const HowToGuide = (props) => {
 
         <div className="rightD">
           <p>
-            Click this icon to toggle the dive site anchors on and off, this will allow you to see the heat dots more easily when needed.
+            Click this icon to toggle the dive site anchors on and off, 
+            this will allow you to see the heat dots more easily when needed.
           </p>
         </div>
       </div>
@@ -87,7 +90,11 @@ const HowToGuide = (props) => {
 
         <div className="rightP">
           <p>
-            Click this icon to toggle the photo uploader window, in this window you can upload photos of the animals you have seen, the system will take the datethe photo was taken as well as the GPS coordinates, if they are part of the photo, if not click the red pin icon to the right of the fields to open another map page to drop a pin.
+            Click this icon to toggle the photo uploader window, 
+            in this window you can upload photos of the animals you have seen, 
+            the system will take the date the photo was taken as well as the GPS coordinates, 
+            if they are part of the photo, if not click the red pin icon to the right of the fields to open another map page to drop a pin.
+            Doing so will generate a set of GPS cooridnates.
           </p>
         </div>
       </div>
@@ -99,7 +106,10 @@ const HowToGuide = (props) => {
 
         <div className="rightDS">
           <p>
-            Click this icon to toggle the add dive site window, in this window you can upload a photo from your dive site and it will pull the GPS coordinates, all you need to do is add the site name, and if you dont have a photo click the red pin icon to drop a pin on the map to get the coordiantes.
+            Click this icon to toggle the add dive site window, 
+            in this window you can upload a photo from your dive site and it will pull the GPS coordinates, 
+            all you need to do is add the site name, 
+            and if you dont have a photo click the red pin icon to drop a pin on the map to get the coordinates.
           </p>
         </div>
       </div>

@@ -1,0 +1,102 @@
+
+.titleDiv{
+  margin-top: -15px;
+  margin-left: 10px;
+}
+
+.mainBlurbDiv{
+  margin-left: 10px;
+}
+
+
+.exploreDiv{
+  display: flex;
+  flex-direction: row;
+}
+
+.leftE{
+  height: 30px;
+  width: 5%;
+  margin-top: 23px;
+  margin-left: 2px;
+}
+
+.rightE{
+  height: 30px;
+  width: 93%;
+}
+
+
+.animalDiv{
+  display: flex;
+  flex-direction: row;
+}
+
+.leftA{
+  height: 30px;
+  width: 5%;
+  margin-top: 23px;
+  margin-left: 2px;
+}
+
+.rightA{
+  height: 30px;
+  width: 92%;
+}
+
+
+.diveSiteDiv{
+  display: flex;
+  flex-direction: row;
+}
+
+.leftD{
+  height: 30px;
+  width: 5%;
+  margin-top: 23px;
+  margin-left: 2px;
+}
+
+.rightD{
+  height: 30px;
+  width: 95%;
+  margin-top: 10px;
+}
+
+
+.photoDiv{
+  display: flex;
+  flex-direction: row;
+}
+
+.leftP{
+  height: 30px;
+  width: 5%;
+  margin-top: 35px;
+  margin-left: 2px;
+}
+
+.rightP{
+  height: 30px;
+  width: 95%;
+}
+
+
+.addSiteDiv{
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 40px;
+}
+
+.leftDS{
+  height: 30px;
+  width: 5%;
+  margin-top: 40px;
+  margin-left: 2px;
+}
+
+.rightDS{
+  height: 30px;
+  width: 93%;
+  margin-top: 10px;
+}

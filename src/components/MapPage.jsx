@@ -2,10 +2,12 @@ import React from "react";
 import Homeo from "./Home";
 import Home from "./googleMap";
 import FormModal from "./modals/formModal";
+import FormGuideModal from "./modals/formGuideModal";
 import MonthSlider from "./Slider";
 import GeoCoder from "./geoCoder";
 import PicUploader from "./modals/picUploader";
 import SiteSubmitter from "./modals/siteSubmitter";
+import HowToGuide from "./modals/howToGuide";
 import AnimalSearcher from "./AnimalSearch"
 import { useState, useContext } from "react";
 import ToggleButton from "@mui/material/ToggleButton";
@@ -15,6 +17,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import AnchorIcon from "@mui/icons-material/Anchor";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
+import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 import { DiveSitesContext } from "./contexts/diveSitesContext";
 import { AnimalContext } from "./contexts/animalContext";
 import { PicModalContext } from "./contexts/picModalContext";
@@ -40,6 +43,12 @@ const MapPage = () => {
 
   const toggleAddDiveSiteModal = () => {
     setDiveSiteModal(!diveSiteModal);
+  };
+
+  const [guideModal, setGuideModal] = useState(false);
+
+  const toggleGuideModal = () => {
+    setGuideModal(!guideModal);
   };
 
   return (
@@ -155,6 +164,24 @@ const MapPage = () => {
           <AddLocationAltIcon />
         </ToggleButton></div>
 
+        <div className="col1row7"><ToggleButton
+          sx={{
+            "&.Mui-selected": { backgroundColor: "pink" },
+            "&.Mui-selected:hover": { backgroundColor: "pink" },
+            "&:hover": { backgroundColor: "lightgrey" },
+            backgroundColor: "lightgrey",
+            height: "40px",
+            width: "40px",
+            border: "2px solid black",
+          }}
+          value="check"
+          selected={guideModal}
+          onChange={() => {
+            setGuideModal(toggleGuideModal);
+          }}
+        >
+          <QuestionMarkIcon />
+        </ToggleButton></div>
 
 
       <div className="col1rowB">
@@ -179,6 +206,10 @@ const MapPage = () => {
       <FormModal openup={diveSiteModal} closeup={toggleAddDiveSiteModal}>
         <SiteSubmitter closeup={toggleAddDiveSiteModal} />
       </FormModal>
+
+      <FormGuideModal openup={guideModal} closeup={toggleGuideModal}>
+        <HowToGuide closeup={toggleGuideModal} />
+      </FormGuideModal>
     </div>
 
   );

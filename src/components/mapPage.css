@@ -51,6 +51,14 @@
     left: 10px;
 }
 
+.col1row7 {
+    width: 50px;
+    z-index: 2;
+    position: absolute;
+    top: 383px;
+    left: 10px;
+}
+
 
 .col1rowB{
     width: 145px;

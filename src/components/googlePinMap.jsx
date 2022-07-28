@@ -43,8 +43,6 @@ function PinMap() {
   let timoutHandler;
   let DiveSiteAndHeatSpotValue;
 
-  let newParams;
-
   const options = useMemo(() => ({
     mapTypeId: "satellite",
     clickableIcons: false,
@@ -74,8 +72,8 @@ function PinMap() {
     if (mapRef) {
       window.clearTimeout(timoutHanlder);
       timoutHanlder = window.setTimeout(function () {
-        const newCenter = mapRef.getCenter();
-        setMapCoords([newCenter.lat(), newCenter.lng()]);
+ 
+        setMapCoords([mapRef.getCenter().lat(), mapRef.getCenter().lng()]);
 
         DiveSiteAndHeatSpotValue = setupMapValues(
           mapZoom,
@@ -91,8 +89,8 @@ function PinMap() {
 
   const handleMapZoomChange = () => {
     if (mapRef) {
-      const newZoom = mapRef.getZoom();
-      setMapZoom(newZoom);
+
+      setMapZoom(mapRef.getZoom());
 
       DiveSiteAndHeatSpotValue = setupMapValues(
         mapZoom,
@@ -109,13 +107,12 @@ function PinMap() {
     if (mapRef) {
       window.clearTimeout(timoutHandler);
       timoutHandler = window.setTimeout(function () {
-        const newBounds = mapRef.getBounds();
 
         setBoundaries([
-          newBounds.Sa.lo,
-          newBounds.vb.lo,
-          newBounds.Sa.hi,
-          newBounds.vb.hi,
+          mapRef.getBounds().Sa.lo,
+          mapRef.getBounds().vb.lo,
+          mapRef.getBounds().Sa.hi,
+          mapRef.getBounds().vb.hi,
         ]);
 
         DiveSiteAndHeatSpotValue = setupMapValues(
@@ -136,13 +133,11 @@ function PinMap() {
 
   const handleDragEnd = () => {
     if (pinRef) {
-      console.log("here");
-      const newPinLocation = pinRef.getPosition();
 
       setPin({
         ...pin,
-        Latitude: newPinLocation.lat(),
-        Longitude: newPinLocation.lng(),
+        Latitude: pinRef.getPosition().lat(),
+        Longitude: pinRef.getPosition().lng(),
       });
     }
   };

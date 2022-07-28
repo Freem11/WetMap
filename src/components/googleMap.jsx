@@ -10,12 +10,7 @@ import useSupercluster from "use-supercluster";
 import { diveSites, heatVals } from "./data/testdata";
 import anchorIcon from "../images/anchor11.png";
 import anchorClust from "../images/anchor3.png";
-import {
-  useMemo,
-  useState,
-  useContext,
-  useEffect,
-} from "react";
+import { useMemo, useState, useContext, useEffect } from "react";
 import { CoordsContext } from "./contexts/mapCoordsContext";
 import { ZoomContext } from "./contexts/mapZoomContext";
 import { JumpContext } from "./contexts/jumpContext";
@@ -23,7 +18,7 @@ import { DiveSitesContext } from "./contexts/diveSitesContext";
 import { SliderContext } from "./contexts/sliderContext";
 import { AnimalContext } from "./contexts/animalContext";
 import { setupMapValues } from "../helpers/mapHelpers";
-import { setupClusters } from "../helpers/clusterHelpers"
+import { setupClusters } from "../helpers/clusterHelpers";
 
 export default function Home() {
   const { isLoaded } = useLoadScript({
@@ -84,7 +79,7 @@ function Map() {
     setMapCoords([center.lat, center.lng]);
     setMapZoom(zoom);
 
-    !divesTog ? SwtchDives = [] : SwtchDives = diveSites
+    !divesTog ? (SwtchDives = []) : (SwtchDives = diveSites);
 
     DiveSiteAndHeatSpotValue = setupMapValues(
       mapZoom,
@@ -108,10 +103,8 @@ function Map() {
     if (mapRef) {
       window.clearTimeout(timoutHanlder);
       timoutHanlder = window.setTimeout(function () {
-        const newCenter = mapRef.getCenter();
-        setMapCoords([newCenter.lat(), newCenter.lng()]);
-
-        !divesTog ? SwtchDives = [] : SwtchDives = diveSites
+        setMapCoords([mapRef.getCenter().lat(), mapRef.getCenter().lng()]);
+        !divesTog ? (SwtchDives = []) : (SwtchDives = diveSites);
 
         DiveSiteAndHeatSpotValue = setupMapValues(
           mapZoom,
@@ -131,10 +124,8 @@ function Map() {
 
   const handleMapZoomChange = () => {
     if (mapRef) {
-      const newZoom = mapRef.getZoom();
-      setMapZoom(newZoom);
-
-      !divesTog ? SwtchDives = [] : SwtchDives = diveSites
+      setMapZoom(mapRef.getZoom());
+      !divesTog ? (SwtchDives = []) : (SwtchDives = diveSites);
 
       DiveSiteAndHeatSpotValue = setupMapValues(
         mapZoom,
@@ -155,17 +146,15 @@ function Map() {
     if (mapRef) {
       window.clearTimeout(timoutHandler);
       timoutHandler = window.setTimeout(function () {
-        const newBounds = mapRef.getBounds();
-    
         setBoundaries([
-          newBounds.Sa.lo,
-          newBounds.vb.lo,
-          newBounds.Sa.hi,
-          newBounds.vb.hi,
+          mapRef.getBounds().Sa.lo,
+          mapRef.getBounds().vb.lo,
+          mapRef.getBounds().Sa.hi,
+          mapRef.getBounds().vb.hi,
         ]);
 
-        !divesTog ? SwtchDives = [] : SwtchDives = diveSites
-     
+        !divesTog ? (SwtchDives = []) : (SwtchDives = diveSites);
+
         DiveSiteAndHeatSpotValue = setupMapValues(
           mapZoom,
           mapCoords[0],
@@ -190,9 +179,8 @@ function Map() {
   }, [jump]);
 
   useEffect(() => {
+    !divesTog ? (SwtchDives = []) : (SwtchDives = diveSites);
 
-    !divesTog ? SwtchDives = [] : SwtchDives = diveSites
- 
     DiveSiteAndHeatSpotValue = setupMapValues(
       mapZoom,
       mapCoords[0],
@@ -205,11 +193,10 @@ function Map() {
 
     setnewSites(DiveSiteAndHeatSpotValue[0]);
     setHeatPts(formatHeatVals(DiveSiteAndHeatSpotValue[1]));
-
   }, [mapCoords, divesTog, sliderVal, animalVal]);
 
-  const points = setupClusters(newSites)
-  
+  const points = setupClusters(newSites);
+
   const { clusters, supercluster } = useSupercluster({
     points,
     bounds: boundaries,

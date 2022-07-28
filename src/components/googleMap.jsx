@@ -1,4 +1,3 @@
-import { color, height, sizeHeight, style } from "@mui/system";
 import {
   GoogleMap,
   useLoadScript,
@@ -11,22 +10,19 @@ import useSupercluster from "use-supercluster";
 import { diveSites, heatVals } from "./data/testdata";
 import anchorIcon from "../images/anchor11.png";
 import anchorClust from "../images/anchor3.png";
-import { Satellite, LastPage } from "@mui/icons-material";
 import {
   useMemo,
   useState,
   useContext,
-  useCallback,
-  useRef,
   useEffect,
 } from "react";
 import { CoordsContext } from "./contexts/mapCoordsContext";
 import { ZoomContext } from "./contexts/mapZoomContext";
 import { JumpContext } from "./contexts/jumpContext";
 import { DiveSitesContext } from "./contexts/diveSitesContext";
-import { SliderContext } from "./contexts/sliderContext"
-import { AnimalContext } from "./contexts/animalContext"
-import { dataParams, filterSites, filterHeat } from "../helpers/mapHelpers";
+import { SliderContext } from "./contexts/sliderContext";
+import { AnimalContext } from "./contexts/animalContext";
+import { setupMapValues } from "../helpers/mapHelpers";
 
 export default function Home() {
   const { isLoaded } = useLoadScript({
@@ -42,7 +38,7 @@ function Map() {
   const { mapCoords, setMapCoords } = useContext(CoordsContext);
   const { mapZoom, setMapZoom } = useContext(ZoomContext);
   const { jump, setJump } = useContext(JumpContext);
-  const { divesTog, setDivesTog } = useContext(DiveSitesContext);
+  const { divesTog } = useContext(DiveSitesContext);
   const [boundaries, setBoundaries] = useState(null);
   const { animalVal } = useContext(AnimalContext);
   const { sliderVal } = useContext(SliderContext);
@@ -56,9 +52,7 @@ function Map() {
 
   let timoutHanlder;
   let timoutHandler;
-  let newParams;
-  let heatSlice;
-  let animalSliderHeat;
+  let DiveSiteAndHeatSpotValue;
   let SwtchDives;
 
   function formatHeatVals(heatValues) {
@@ -95,12 +89,18 @@ function Map() {
       SwtchDives = diveSites;
     }
 
-    newParams = dataParams(mapZoom, mapCoords[0], mapCoords[1]);
-    setnewSites(filterSites(newParams, SwtchDives));
+    DiveSiteAndHeatSpotValue = setupMapValues(
+      mapZoom,
+      mapCoords[0],
+      mapCoords[1],
+      SwtchDives,
+      heatVals,
+      sliderVal,
+      animalVal
+    );
 
-    heatSlice = filterSites(newParams, heatVals);
-    animalSliderHeat = filterHeat(sliderVal, animalVal, heatSlice)
-    setHeatPts(formatHeatVals(animalSliderHeat));
+    setnewSites(DiveSiteAndHeatSpotValue[0]);
+    setHeatPts(formatHeatVals(DiveSiteAndHeatSpotValue[1]));
   }, []);
 
   const handleOnLoad = (map) => {
@@ -120,12 +120,18 @@ function Map() {
           SwtchDives = diveSites;
         }
 
-        newParams = dataParams(mapZoom, mapCoords[0], mapCoords[1]);
-        setnewSites(filterSites(newParams, SwtchDives));
+        DiveSiteAndHeatSpotValue = setupMapValues(
+          mapZoom,
+          mapCoords[0],
+          mapCoords[1],
+          SwtchDives,
+          heatVals,
+          sliderVal,
+          animalVal
+        );
 
-        heatSlice = filterSites(newParams, heatVals);
-        animalSliderHeat = filterHeat(sliderVal, animalVal, heatSlice)
-        setHeatPts(formatHeatVals(animalSliderHeat));
+        setnewSites(DiveSiteAndHeatSpotValue[0]);
+        setHeatPts(formatHeatVals(DiveSiteAndHeatSpotValue[1]));
       }, 50);
     }
   };
@@ -141,12 +147,18 @@ function Map() {
         SwtchDives = diveSites;
       }
 
-      newParams = dataParams(mapZoom, mapCoords[0], mapCoords[1]);
-      setnewSites(filterSites(newParams, SwtchDives));
+      DiveSiteAndHeatSpotValue = setupMapValues(
+        mapZoom,
+        mapCoords[0],
+        mapCoords[1],
+        SwtchDives,
+        heatVals,
+        sliderVal,
+        animalVal
+      );
 
-      heatSlice = filterSites(newParams, heatVals);
-      animalSliderHeat = filterHeat(sliderVal, animalVal, heatSlice)
-      setHeatPts(formatHeatVals(animalSliderHeat));
+      setnewSites(DiveSiteAndHeatSpotValue[0]);
+      setHeatPts(formatHeatVals(DiveSiteAndHeatSpotValue[1]));
     }
   };
 
@@ -155,7 +167,7 @@ function Map() {
       window.clearTimeout(timoutHandler);
       timoutHandler = window.setTimeout(function () {
         const newBounds = mapRef.getBounds();
-        // console.log("boundaries are:", newBounds);
+    
         setBoundaries([
           newBounds.Sa.lo,
           newBounds.vb.lo,
@@ -169,12 +181,18 @@ function Map() {
           SwtchDives = diveSites;
         }
 
-        newParams = dataParams(mapZoom, mapCoords[0], mapCoords[1]);
-        setnewSites(filterSites(newParams, SwtchDives));
+        DiveSiteAndHeatSpotValue = setupMapValues(
+          mapZoom,
+          mapCoords[0],
+          mapCoords[1],
+          SwtchDives,
+          heatVals,
+          sliderVal,
+          animalVal
+        );
 
-        heatSlice = filterSites(newParams, heatVals);
-        animalSliderHeat = filterHeat(sliderVal, animalVal, heatSlice)
-        setHeatPts(formatHeatVals(animalSliderHeat));
+        setnewSites(DiveSiteAndHeatSpotValue[0]);
+        setHeatPts(formatHeatVals(DiveSiteAndHeatSpotValue[1]));
       });
     }
   };
@@ -194,28 +212,19 @@ function Map() {
       SwtchDives = diveSites;
     }
 
-    newParams = dataParams(mapZoom, mapCoords[0], mapCoords[1]);
-    setnewSites(filterSites(newParams, SwtchDives));
+    DiveSiteAndHeatSpotValue = setupMapValues(
+      mapZoom,
+      mapCoords[0],
+      mapCoords[1],
+      SwtchDives,
+      heatVals,
+      sliderVal,
+      animalVal
+    );
 
-    heatSlice = filterSites(newParams, heatVals);
-    animalSliderHeat = filterHeat(sliderVal, animalVal, heatSlice)
-    setHeatPts(formatHeatVals(animalSliderHeat));
-  }, [mapCoords]);
-
-  useEffect(() => {
-    if (!divesTog) {
-      SwtchDives = [];
-    } else {
-      SwtchDives = diveSites;
-    }
-
-    newParams = dataParams(mapZoom, mapCoords[0], mapCoords[1]);
-    setnewSites(filterSites(newParams, SwtchDives));
-
-    heatSlice = filterSites(newParams, heatVals);
-    animalSliderHeat = filterHeat(sliderVal, animalVal, heatSlice)
-    setHeatPts(formatHeatVals(animalSliderHeat));
-  }, [divesTog, sliderVal, animalVal]);
+    setnewSites(DiveSiteAndHeatSpotValue[0]);
+    setHeatPts(formatHeatVals(DiveSiteAndHeatSpotValue[1]));
+  }, [mapCoords, divesTog, sliderVal, animalVal]);
 
   const points = newSites.map((site) => ({
     type: "Feature",
@@ -254,22 +263,24 @@ function Map() {
 
       {clusters.map((cluster) => {
         const [longitude, latitude] = cluster.geometry.coordinates;
-        const { cluster: isCluster, point_count: pointCount } =
-          cluster.properties;
+        const {
+          cluster: isCluster,
+          point_count: pointCount,
+        } = cluster.properties;
 
         if (isCluster) {
           return (
-            <Marker 
-              key={cluster.properties.siteID} 
+            <Marker
+              key={cluster.properties.siteID}
               position={{ lat: latitude, lng: longitude }}
               title={pointCount.toString() + " sites"}
               icon={anchorClust}
-              >
+            >
               <div
                 style={{
                   width: `${10 + (pointCount / points.length) * 30}px`,
                   height: `${10 + (pointCount / points.length) * 30}px`,
-                  backgroundColor: "lightblue"
+                  backgroundColor: "lightblue",
                 }}
               >
                 {pointCount}

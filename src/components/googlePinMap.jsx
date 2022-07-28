@@ -1,9 +1,7 @@
-import { color, height, sizeHeight, style } from "@mui/system";
 import {
   GoogleMap,
   useLoadScript,
   Marker,
-  useGoogleMap,
 } from "@react-google-maps/api";
 import "./googleMap.css";
 import useSupercluster from "use-supercluster";
@@ -11,19 +9,16 @@ import { diveSites } from "./data/testdata";
 import anchorIcon from "../images/anchor11.png";
 import anchorClust from "../images/anchor3.png";
 import whale from "../images/icons8-spouting-whale-36.png"
-import { Satellite } from "@mui/icons-material";
 import {
   useMemo,
   useState,
   useContext,
-  useCallback,
-  useRef,
   useEffect,
 } from "react";
 import { CoordsContext } from "./contexts/mapCoordsContext";
 import { ZoomContext } from "./contexts/mapZoomContext";
 import { PinContext } from './contexts/pinContext'
-import { dataParams, filterSites } from "../helpers/mapHelpers";
+import { dataParams, filterSites, setupMapValues } from "../helpers/mapHelpers";
 
 export default function PinHome() {
   const { isLoaded } = useLoadScript({
@@ -51,6 +46,8 @@ function PinMap() {
 
   let timoutHanlder;
   let timoutHandler;
+  let DiveSiteAndHeatSpotValue;
+
   let newParams;
 
   const options = useMemo(() => ({
@@ -64,8 +61,14 @@ function PinMap() {
     setMapCoords([center.lat, center.lng]);
     setMapZoom(zoom);
 
-    newParams = dataParams(mapZoom, mapCoords[0], mapCoords[1]);
-    setnewSites(filterSites(newParams, diveSites));
+    DiveSiteAndHeatSpotValue = setupMapValues(
+      mapZoom,
+      mapCoords[0],
+      mapCoords[1],
+      diveSites
+    );
+
+    setnewSites(DiveSiteAndHeatSpotValue[0]);
   }, []);
 
   const handleOnLoad = (map) => {
@@ -79,8 +82,14 @@ function PinMap() {
         const newCenter = mapRef.getCenter();
         setMapCoords([newCenter.lat(), newCenter.lng()]);
 
-        newParams = dataParams(mapZoom, mapCoords[0], mapCoords[1]);
-        setnewSites(filterSites(newParams, diveSites));
+        DiveSiteAndHeatSpotValue = setupMapValues(
+          mapZoom,
+          mapCoords[0],
+          mapCoords[1],
+          diveSites
+        );
+    
+        setnewSites(DiveSiteAndHeatSpotValue[0]);
       }, 50);
     }
   };
@@ -90,8 +99,14 @@ function PinMap() {
       const newZoom = mapRef.getZoom();
       setMapZoom(newZoom);
 
-      newParams = dataParams(mapZoom, mapCoords[0], mapCoords[1]);
-      setnewSites(filterSites(newParams, diveSites));
+      DiveSiteAndHeatSpotValue = setupMapValues(
+        mapZoom,
+        mapCoords[0],
+        mapCoords[1],
+        diveSites
+      );
+  
+      setnewSites(DiveSiteAndHeatSpotValue[0]);
     }
   };
 
@@ -100,7 +115,7 @@ function PinMap() {
       window.clearTimeout(timoutHandler);
       timoutHandler = window.setTimeout(function () {
         const newBounds = mapRef.getBounds();
-        // console.log("boundaries are:", newBounds);
+
         setBoundaries([
           newBounds.Sa.lo,
           newBounds.vb.lo,
@@ -108,17 +123,15 @@ function PinMap() {
           newBounds.vb.hi,
         ]);
 
-        if (!divesTog) {
-          SwtchDives = [];
-        } else {
-          SwtchDives = diveSites;
-        }
+        DiveSiteAndHeatSpotValue = setupMapValues(
+          mapZoom,
+          mapCoords[0],
+          mapCoords[1],
+          diveSites
+        );
+    
+        setnewSites(DiveSiteAndHeatSpotValue[0]);
 
-        newParams = dataParams(mapZoom, mapCoords[0], mapCoords[1]);
-        setnewSites(filterSites(newParams, SwtchDives));
-
-        heatSlice = filterSites(newParams, heatVals);
-        setHeatPts(formatHeatVals(heatSlice));
       });
     }
   };

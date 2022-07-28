@@ -121,4 +121,22 @@ let actualMonth = month + 1
   });
   return newArr;
 }
-export { dataParams, filterSites, filterHeat };
+
+function setupMapValues(zoomLevel, latitude, longitude, diveSites, heatValues, slider, animal){
+ 
+  let GPSBubble = dataParams(zoomLevel, latitude, longitude)
+  let diveSpots = filterSites(GPSBubble, diveSites)
+
+  let heatSpots
+
+  if (heatValues) {
+    heatSpots = filterHeat(slider, animal, filterSites(GPSBubble, heatValues))
+  } else {
+    heatSpots = []
+  }
+  
+  return([diveSpots, heatSpots])
+}
+
+
+export { dataParams, filterSites, filterHeat, setupMapValues };

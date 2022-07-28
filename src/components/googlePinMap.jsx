@@ -172,7 +172,7 @@ function PinMap() {
         if (isCluster) {
           return (
             <Marker
-              key={cluster.properties.siteID}
+              key={cluster.id}
               position={{ lat: latitude, lng: longitude }}
               title={pointCount.toString() + " sites"}
               icon={anchorClust}

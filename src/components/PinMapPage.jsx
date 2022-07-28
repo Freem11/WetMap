@@ -1,3 +1,4 @@
+import React from "react";
 import PinHome from "./googlePinMap"
 import { useState, useContext } from "react";
 import { PinContext } from './contexts/pinContext'
@@ -6,7 +7,7 @@ import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 
 
-const PinMapPage = () => {
+const PinMapPage = React.memo(() => {
 
   let navigate = useNavigate();
   const { pin, setPin } = useContext(PinContext)
@@ -62,6 +63,6 @@ const PinMapPage = () => {
     )
 
 
-}
+});
 
 export default PinMapPage;

@@ -26,7 +26,7 @@ import "./mapPage.css";
 const geoCoderZone = (<div style={{marginLeft:"10px"}}><GeoCoder></GeoCoder></div>);
 const animalSearchZone = (<div style={{marginLeft:"10px"}}><AnimalSearcher></AnimalSearcher></div>);
 
-const MapPage = () => {
+const MapPage = React.memo(() => {
   
   const { divesTog, setDivesTog } = useContext(DiveSitesContext);
   const [showGeoCoder, setShowGeoCoder] = useState(false);
@@ -214,6 +214,6 @@ const MapPage = () => {
 
   );
 
-};
+});
 
 export default MapPage;

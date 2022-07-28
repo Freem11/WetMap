@@ -1,5 +1,5 @@
 import * as React  from 'react';
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import { SliderContext } from './contexts/sliderContext'
@@ -60,7 +60,11 @@ const {sliderVal, setSliderVal} = useContext(SliderContext)
 
 
 function valuetext(value) {
-    setSliderVal(value)
+
+    useEffect(() => {
+        setSliderVal(value)
+    }, [value])
+    
 }
 
     return (

@@ -1,17 +1,17 @@
-import { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Container, Form, FormGroup, Label, Input } from "reactstrap";
 import "./picUploader.css";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import exifr from "exifr";
-import { useNavigate } from "react-router-dom"; 
-import { PinContext } from '../contexts/pinContext'
-import PlaceIcon from '@mui/icons-material/Place';
+import { useNavigate } from "react-router-dom";
+import { PinContext } from "../contexts/pinContext";
+import PlaceIcon from "@mui/icons-material/Place";
 
-const PicUploader = (props) => {
+const PicUploader = React.memo((props) => {
   const { closeup } = props;
   let navigate = useNavigate();
-  const { pin, setPin } = useContext(PinContext)
+  const { pin, setPin } = useContext(PinContext);
 
   const [uploadedFile, setUploadedFile] = useState({
     selectedFile: null,
@@ -19,27 +19,27 @@ const PicUploader = (props) => {
 
   useEffect(() => {
     if (pin.PicDate === "") {
-    let Rnow = new Date();
+      let Rnow = new Date();
 
-    let yr0 = Rnow.getFullYear().toString();
-    let mth0 = (Rnow.getMonth() + 1).toString();
-    let dy0 = Rnow.getDate().toString();
+      let yr0 = Rnow.getFullYear().toString();
+      let mth0 = (Rnow.getMonth() + 1).toString();
+      let dy0 = Rnow.getDate().toString();
 
-    if (dy0.length == 1) {
-      dy0 = "0" + dy0;
+      if (dy0.length == 1) {
+        dy0 = "0" + dy0;
+      }
+
+      if (mth0.length == 1) {
+        mth0 = "0" + mth0;
+      }
+
+      let rightNow = yr0 + "-" + mth0 + "-" + dy0;
+
+      setPin({
+        ...pin,
+        PicDate: rightNow,
+      });
     }
-
-    if (mth0.length == 1) {
-      mth0 = "0" + mth0;
-    }
-
-    let rightNow = yr0 + "-" + mth0 + "-" + dy0;
-
-    setPin({
-      ...pin,
-      PicDate: rightNow,
-    });
-  }
   }, []);
 
   const handleChange = (e) => {
@@ -54,6 +54,8 @@ const PicUploader = (props) => {
       let yr = convDate.getFullYear().toString();
       let mth = (convDate.getMonth() + 1).toString();
       let dy = convDate.getDate().toString();
+      let lats = '';
+      let lngs = '';
 
       if (dy.length == 1) {
         dy = "0" + dy;
@@ -64,6 +66,41 @@ const PicUploader = (props) => {
       }
 
       let moddedDate = yr + "-" + mth + "-" + dy;
+
+      exifr.parse(e.target.files[0]).then((output) => {
+        if (output.GPSLatitude && output.GPSLongitude) {
+
+          if (output.GPSLatitudeRef === "S") {
+            lats =
+              0 -
+              (output.GPSLatitude[0] +
+                output.GPSLatitude[1] / 60 +
+                output.GPSLatitude[2] / 3600);
+          } else {
+            lats =
+              output.GPSLatitude[0] +
+              output.GPSLatitude[1] / 60 +
+              output.GPSLatitude[2] / 3600;
+          }
+
+          if (output.GPSLongitudeRef === "W") {
+            lngs =
+              0 -
+              output.GPSLongitude[0] +
+              output.GPSLongitude[1] / 60 +
+              output.GPSLongitude[2] / 3600;
+          } else {
+            lngs =
+              output.GPSLongitude[0] +
+              output.GPSLongitude[1] / 60 +
+              output.GPSLongitude[2] / 3600;
+          }
+        } else {
+          console.log("No GPS on this one!");
+        }
+
+        setPin({ ...pin, Latitude: lats, Longitude: lngs });
+      });
 
       setPin({ ...pin, PicFile: fileName, PicDate: moddedDate });
     } else {
@@ -77,55 +114,9 @@ const PicUploader = (props) => {
     return;
   };
 
-  if (uploadedFile.selectedFile !== null) {
-    exifr.parse(uploadedFile.selectedFile).then((output) => {
-      if (output.GPSLatitude && output.GPSLongitude) {
-        if (output.GPSLatitudeRef === "S") {
-          setPin({
-            ...pin,
-            Latitude:
-              0 -
-              (output.GPSLatitude[0] +
-                output.GPSLatitude[1] / 60 +
-                output.GPSLatitude[2] / 3600),
-          });
-        } else {
-          setPin({
-            ...pin,
-            Latitude:
-              output.GPSLatitude[0] +
-              output.GPSLatitude[1] / 60 +
-              output.GPSLatitude[2] / 3600,
-          });
-        }
-
-        if (output.GPSLongitudeRef === "W") {
-          setPin({
-            ...pin,
-            Longitude:
-              0 -
-              output.GPSLongitude[0] +
-              output.GPSLongitude[1] / 60 +
-              output.GPSLongitude[2] / 3600,
-          });
-        } else {
-          setPin({
-            ...pin,
-            Longitude:
-              output.GPSLongitude[0] +
-              output.GPSLongitude[1] / 60 +
-              output.GPSLongitude[2] / 3600,
-          });
-        }
-      } else {
-        console.log("No GPS on this one!");
-      }
-    });
-  }
-
-  const navi= () => {
-    navigate("/pinDrop")
-  }
+  const navi = () => {
+    navigate("/pinDrop");
+  };
 
   return (
     <Container fluid>
@@ -173,7 +164,7 @@ const PicUploader = (props) => {
               variant="standard"
               type="date"
               name="PicDate"
-              value= {pin.PicDate}
+              value={pin.PicDate}
               onChange={handleChange}
               sx={{ width: "167px" }}
             />
@@ -211,11 +202,13 @@ const PicUploader = (props) => {
             </div>
           </div>
           <div className="Gbox">
-          <FormGroup>
-            <Button variant="text" id="jumpButton" onClick={navi}>
-            <PlaceIcon sx={{color: "maroon", height: "40px", width: "40px"}}></PlaceIcon>
-            </Button>
-          </FormGroup>
+            <FormGroup>
+              <Button variant="text" id="jumpButton" onClick={navi}>
+                <PlaceIcon
+                  sx={{ color: "maroon", height: "40px", width: "40px" }}
+                ></PlaceIcon>
+              </Button>
+            </FormGroup>
           </div>
         </div>
 
@@ -227,6 +220,6 @@ const PicUploader = (props) => {
       </Form>
     </Container>
   );
-};
+});
 
 export default PicUploader;

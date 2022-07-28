@@ -1,7 +1,9 @@
+import React, {useContext} from 'react';
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { Button } from "reactstrap";
 import "./formModal.css"
+import { PinContext } from "../contexts/pinContext";
 
 const style = {
     position: 'absolute',
@@ -16,9 +18,21 @@ const style = {
     borderRadius: '10px',
 };
 
-const FormModal = (props) => {
+const FormModal = React.memo((props) => {
 
     const { openup, closeup, children } = props
+    const { setPin } = useContext(PinContext);
+
+    const handleClose = () => {
+        setPin({
+            PicFile: "",
+            Animal: "",
+            PicDate: "",
+            Latitude: "",
+            Longitude: "",
+          })
+        closeup()
+    }
 
     return (
         <div>
@@ -28,13 +42,13 @@ const FormModal = (props) => {
                 >
                 <Box sx = {style}>
                     <div className="modalBox">
-                       <Button style={{ color: '#D8DBE2', backgroundColor: 'maroon', boxShadow: '2px 2px 3px 1px rgb(131, 127, 127)'}}className="modalButton2" onClick={closeup}>X</Button>
+                       <Button style={{ color: '#D8DBE2', backgroundColor: 'maroon', boxShadow: '2px 2px 3px 1px rgb(131, 127, 127)'}}className="modalButton2" onClick={handleClose}>X</Button>
                     </div>
                     {children}
                 </Box>
             </Modal>
         </div>
     )
-}
+});
 
 export default FormModal;

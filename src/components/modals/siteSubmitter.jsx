@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Container, Form, FormGroup, Label, Input } from "reactstrap";
-import "./siteSubmitter.css"
+import "./siteSubmitter.css";
 import exifr from "exifr";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import { exifGPSHelper } from "../../helpers/exifGPSHelpers"
+import { exifGPSHelper } from "../../helpers/exifGPSHelpers";
 
 const SiteSubmitter = (props) => {
   const { closeup } = props;
@@ -20,24 +20,30 @@ const SiteSubmitter = (props) => {
   });
 
   const handleChange = (e) => {
+    setFormVals({ ...formVals, [e.target.name]: e.target.value });
 
-      setFormVals({ ...formVals, [e.target.name]: e.target.value });
+    if (e.target.name === "PicFile") {
+      setUploadedFile({ ...uploadedFile, selectedFile: e.target.files[0] });
 
-      if (e.target.name === "PicFile") {
-        setUploadedFile({ ...uploadedFile, selectedFile: e.target.files[0] });
+      exifr.parse(e.target.files[0]).then((output) => {
+        let EXIFData = exifGPSHelper(
+          output.GPSLatitude,
+          output.GPSLongitude,
+          output.GPSLatitudeRef,
+          output.GPSLongitudeRef
+        );
 
-        exifr.parse(e.target.files[0]).then((output) => {
-          let EXIFData = exifGPSHelper(output.GPSLatitude, output.GPSLongitude, output.GPSLatitudeRef, output.GPSLongitudeRef)
-      
-        if (EXIFData){
-        setFormVals({ ...formVals, Latitude: EXIFData[0], Longitude: EXIFData[1] });
+        if (EXIFData) {
+          setFormVals({
+            ...formVals,
+            Latitude: EXIFData[0],
+            Longitude: EXIFData[1],
+          });
         } else {
-          setFormVals({ ...formVals, Latitude: '', Longitude: '' });
+          setFormVals({ ...formVals, Latitude: "", Longitude: "" });
         }
-        });
-
-      }
-  
+      });
+    }
   };
 
   const handleSubmit = (e) => {

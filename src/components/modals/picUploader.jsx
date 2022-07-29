@@ -7,7 +7,7 @@ import exifr from "exifr";
 import { useNavigate } from "react-router-dom";
 import { PinContext } from "../contexts/pinContext";
 import PlaceIcon from "@mui/icons-material/Place";
-import { exifGPSHelper } from "../../helpers/exifGPSHelpers"
+import { exifGPSHelper } from "../../helpers/exifGPSHelpers";
 
 const PicUploader = React.memo((props) => {
   const { closeup } = props;
@@ -55,7 +55,7 @@ const PicUploader = React.memo((props) => {
       let yr = convDate.getFullYear().toString();
       let mth = (convDate.getMonth() + 1).toString();
       let dy = convDate.getDate().toString();
-      
+
       if (dy.length == 1) {
         dy = "0" + dy;
       }
@@ -66,19 +66,32 @@ const PicUploader = React.memo((props) => {
 
       let moddedDate = yr + "-" + mth + "-" + dy;
 
-   
       exifr.parse(e.target.files[0]).then((output) => {
+        let EXIFData = exifGPSHelper(
+          output.GPSLatitude,
+          output.GPSLongitude,
+          output.GPSLatitudeRef,
+          output.GPSLongitudeRef
+        );
 
-        let EXIFData = exifGPSHelper(output.GPSLatitude, output.GPSLongitude, output.GPSLatitudeRef, output.GPSLongitudeRef)
-      
-        if (EXIFData){
-        setPin({ ...pin, PicFile: fileName, PicDate: moddedDate, Latitude: EXIFData[0], Longitude: EXIFData[1] });
+        if (EXIFData) {
+          setPin({
+            ...pin,
+            PicFile: fileName,
+            PicDate: moddedDate,
+            Latitude: EXIFData[0],
+            Longitude: EXIFData[1],
+          });
         } else {
-          setPin({ ...pin, PicFile: fileName, PicDate: moddedDate, Latitude: '', Longitude: '' });
+          setPin({
+            ...pin,
+            PicFile: fileName,
+            PicDate: moddedDate,
+            Latitude: "",
+            Longitude: "",
+          });
         }
-       
       });
-
     } else {
       setPin({ ...pin, [e.target.name]: e.target.value });
     }

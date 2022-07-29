@@ -147,11 +147,14 @@ function Map() {
     if (mapRef) {
       window.clearTimeout(timoutHandler);
       timoutHandler = window.setTimeout(function () {
+        let bnds = mapRef.getBounds()
+        let lats = bnds[Object.keys(bnds)[0]]
+        let lngs = bnds[Object.keys(bnds)[1]]
         setBoundaries([
-          mapRef.getBounds().Sa.lo,
-          mapRef.getBounds().vb.lo,
-          mapRef.getBounds().Sa.hi,
-          mapRef.getBounds().vb.hi,
+          lngs.lo,
+          lats.lo,
+          lngs.hi,
+          lats.hi,
         ]);
 
         !divesTog ? (SwtchDives = []) : (SwtchDives = diveSites);
@@ -168,7 +171,7 @@ function Map() {
 
         setnewSites(DiveSiteAndHeatSpotValue[0]);
         setHeatPts(formatHeatVals(DiveSiteAndHeatSpotValue[1]));
-      });
+         }, 50);
     }
   };
 

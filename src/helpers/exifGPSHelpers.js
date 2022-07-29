@@ -1,41 +1,25 @@
-function exifGSPHelper(file) {
 
-  exifr.parse(file).then((output) => {
-    if (output.GPSLatitude && output.GPSLongitude) {
+function exifGPSHelper(lat, lng, latRef, lngRef) {
+  let lats = "";
+  let lngs = "";
 
-      if (output.GPSLatitudeRef === "S") {
-        lats =
-          0 -
-          (output.GPSLatitude[0] +
-            output.GPSLatitude[1] / 60 +
-            output.GPSLatitude[2] / 3600);
-      } else {
-        lats =
-          output.GPSLatitude[0] +
-          output.GPSLatitude[1] / 60 +
-          output.GPSLatitude[2] / 3600;
-      }
-
-      if (output.GPSLongitudeRef === "W") {
-        lngs =
-          0 -
-          output.GPSLongitude[0] +
-          output.GPSLongitude[1] / 60 +
-          output.GPSLongitude[2] / 3600;
-      } else {
-        lngs =
-          output.GPSLongitude[0] +
-          output.GPSLongitude[1] / 60 +
-          output.GPSLongitude[2] / 3600;
-      }
-      
+  if (lat && lng) {
+    if (latRef === "S") {
+      lats = 0 - (lat[0] + lat[1] / 60 + lat[2] / 3600);
     } else {
-
-      return (console.log("No GPS on this one!"));
+      lats = lat[0] + lat[1] / 60 + lat[2] / 3600;
     }
 
-    return[lats, lngs]
-    
-  });
+    if (lngRef === "W") {
+      lngs = 0 - lng[0] + lng[1] / 60 + lng[2] / 3600;
+    } else {
+      lngs = lng[0] + lng[1] / 60 + lng[2] / 3600;
+    }
 
+    return [lats, lngs];
+  } else {
+    return console.log("No GPS on this one!");
+  }
 }
+
+export { exifGPSHelper };

@@ -8,11 +8,28 @@ import { useNavigate } from "react-router-dom";
 import { PinContext } from "../contexts/pinContext";
 import PlaceIcon from "@mui/icons-material/Place";
 import { exifGPSHelper } from "../../helpers/exifGPSHelpers";
+import Collapse from "@mui/material/Collapse";
+
+const noGPSZone = (
+  <div
+    style={{
+      marginLeft: "2%",
+      backgroundColor: "pink",
+      height: "40px",
+      width: "95%",
+      color: "red",
+      borderRadius: "15px"
+    }}
+  >
+    <h4 style={{marginLeft: '35px', paddingTop: "10px"}}>No GPS Coordinates Found!</h4>
+  </div>
+);
 
 const PicUploader = React.memo((props) => {
   const { closeup } = props;
   let navigate = useNavigate();
   const { pin, setPin } = useContext(PinContext);
+  const [showNoGPS, setShowNoGPS] = useState(false);
 
   const [uploadedFile, setUploadedFile] = useState({
     selectedFile: null,
@@ -90,11 +107,24 @@ const PicUploader = React.memo((props) => {
             Latitude: "",
             Longitude: "",
           });
+          setShowNoGPS(true);
         }
       });
     } else {
       setPin({ ...pin, [e.target.name]: e.target.value });
+     
     }
+  };
+
+  const handleNoGPSClose = () => {
+    setShowNoGPS(false)
+    return;
+  };
+
+  const handleNoGPSCloseOnMapChange = () => {
+    setShowNoGPS(false)
+    navi()
+    return;
   };
 
   const handleSubmit = (e) => {
@@ -127,6 +157,7 @@ const PicUploader = React.memo((props) => {
               name="PicFile"
               bsSize="lg"
               onChange={handleChange}
+              onClick={handleNoGPSClose}
             ></Input>
           </FormGroup>
         </div>
@@ -141,6 +172,7 @@ const PicUploader = React.memo((props) => {
               name="Animal"
               value={pin.Animal}
               onChange={handleChange}
+              onClick={handleNoGPSClose}
             />
           </FormGroup>
         </div>
@@ -155,10 +187,15 @@ const PicUploader = React.memo((props) => {
               name="PicDate"
               value={pin.PicDate}
               onChange={handleChange}
+              onClick={handleNoGPSClose}
               sx={{ width: "167px" }}
             />
           </FormGroup>
         </div>
+
+        <Collapse in={showNoGPS} orientation="vertical" collapsedSize="0px">
+          {noGPSZone}
+        </Collapse>
 
         <div className="Tbox">
           <div>
@@ -172,6 +209,7 @@ const PicUploader = React.memo((props) => {
                   name="Latitude"
                   value={pin.Latitude}
                   onChange={handleChange}
+                  onClick={handleNoGPSClose}
                 />
               </FormGroup>
             </div>
@@ -186,13 +224,14 @@ const PicUploader = React.memo((props) => {
                   name="Longitude"
                   value={pin.Longitude}
                   onChange={handleChange}
+                  onClick={handleNoGPSClose}
                 />
               </FormGroup>
             </div>
           </div>
           <div className="Gbox">
             <FormGroup>
-              <Button variant="text" id="jumpButton" onClick={navi}>
+              <Button variant="text" id="jumpButton" onClick={handleNoGPSCloseOnMapChange}>
                 <PlaceIcon
                   sx={{ color: "maroon", height: "40px", width: "40px" }}
                 ></PlaceIcon>

@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { AnimalContext } from "./contexts/animalContext";
 import { photos } from "./data/testdata";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -6,7 +6,7 @@ import TextField from "@mui/material/TextField";
 
 export default function AnimalSearcher() {
 
-const { animalVal, setAnimalVal } = useContext(AnimalContext);
+const { setAnimalVal } = useContext(AnimalContext);
   
   return (
     <Autocomplete

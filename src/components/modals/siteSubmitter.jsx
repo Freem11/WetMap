@@ -5,9 +5,26 @@ import exifr from "exifr";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { exifGPSHelper } from "../../helpers/exifGPSHelpers";
+import Collapse from "@mui/material/Collapse";
+
+const noGPSZone = (
+  <div
+    style={{
+      marginLeft: "2%",
+      backgroundColor: "pink",
+      height: "40px",
+      width: "95%",
+      color: "red",
+      borderRadius: "15px"
+    }}
+  >
+    <h4 style={{marginLeft: '35px', paddingTop: "10px"}}>No GPS Coordinates Found!</h4>
+  </div>
+);
 
 const SiteSubmitter = (props) => {
   const { closeup } = props;
+  const [showNoGPS, setShowNoGPS] = useState(false);
 
   const [formVals, setFormVals] = useState({
     Site: "",
@@ -41,9 +58,15 @@ const SiteSubmitter = (props) => {
           });
         } else {
           setFormVals({ ...formVals, Latitude: "", Longitude: "" });
+          setShowNoGPS(true);
         }
       });
     }
+  };
+
+  const handleNoGPSClose = () => {
+    setShowNoGPS(false)
+    return;
   };
 
   const handleSubmit = (e) => {
@@ -72,6 +95,7 @@ const SiteSubmitter = (props) => {
               name="PicFile"
               bsSize="lg"
               onChange={handleChange}
+              onClick={handleNoGPSClose}
             ></Input>
           </FormGroup>
         </div>
@@ -85,9 +109,14 @@ const SiteSubmitter = (props) => {
               type="text"
               name="Site"
               onChange={handleChange}
+              onClick={handleNoGPSClose}
             />
           </FormGroup>
         </div>
+
+        <Collapse in={showNoGPS} orientation="vertical" collapsedSize="0px">
+          {noGPSZone}
+        </Collapse>
 
         <div className="inputbox">
           <FormGroup>
@@ -99,6 +128,7 @@ const SiteSubmitter = (props) => {
               name="Latitude"
               value={formVals.Latitude}
               onChange={handleChange}
+              onClick={handleNoGPSClose}
             />
           </FormGroup>
         </div>
@@ -113,6 +143,7 @@ const SiteSubmitter = (props) => {
               name="Longitude"
               value={formVals.Longitude}
               onChange={handleChange}
+              onClick={handleNoGPSClose}
             />
           </FormGroup>
         </div>

@@ -1,9 +1,4 @@
-import { useState, useContext, useEffect } from "react";
-import { Container, Form, FormGroup, Label, Input } from "reactstrap";
 import "./siteSubmitter.css";
-import exifr from "exifr";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
 import ExploreIcon from "@mui/icons-material/Explore";
 import SearchIcon from "@mui/icons-material/Search";
 import AnchorIcon from "@mui/icons-material/Anchor";
@@ -12,7 +7,6 @@ import AddLocationAltIcon from "@mui/icons-material/AddLocationAlt";
 import "./howToGuide.css";
 
 const HowToGuide = (props) => {
-  const { closeup } = props;
 
   return (
     <div className="masterDiv">

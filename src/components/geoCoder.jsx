@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Container, Button, Form, FormGroup, Label, Input } from "reactstrap";
+import { Form } from "reactstrap";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
 import { CoordsContext } from "./contexts/mapCoordsContext";

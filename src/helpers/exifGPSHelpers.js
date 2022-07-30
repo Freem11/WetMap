@@ -18,7 +18,7 @@ function exifGPSHelper(lat, lng, latRef, lngRef) {
 
     return [lats, lngs];
   } else {
-    return console.log("No GPS on this one!");
+    return null
   }
 }
 

@@ -5,7 +5,7 @@ import "./formModal.css";
 
 const style = {
   position: "absolute",
-  width: 1000,
+  width: "90%",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",

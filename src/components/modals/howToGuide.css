@@ -12,73 +12,80 @@
 .exploreDiv{
   display: flex;
   flex-direction: row;
+  width: 95%;
+  margin-left: 10px;
 }
 
 .leftE{
-  height: 30px;
+  min-height: inherit;
   width: 5%;
-  margin-top: 23px;
-  margin-left: 2px;
+  margin: auto;
 }
 
 .rightE{
-  height: 30px;
-  width: 93%;
+  min-height: 30px;
+  width: 95%;
+  margin: auto;
 }
 
 
 .animalDiv{
   display: flex;
   flex-direction: row;
+  width: 95%;
+  margin-left: 10px;
 }
 
 .leftA{
-  height: 30px;
+  min-height: inherit;
   width: 5%;
-  margin-top: 23px;
-  margin-left: 2px;
+  margin: auto;
 }
 
 .rightA{
-  height: 30px;
-  width: 92%;
+  min-height: 30px;
+  width: 95%;
+  margin: auto;
 }
 
 
 .diveSiteDiv{
   display: flex;
   flex-direction: row;
+  width: 95%;
+  margin-left: 10px;
 }
 
 .leftD{
-  height: 30px;
+  min-height: inherit;
   width: 5%;
-  margin-top: 23px;
-  margin-left: 2px;
+  margin: auto;
 }
 
 .rightD{
-  height: 30px;
+  min-height: 30px;
   width: 95%;
-  margin-top: 10px;
+  margin: auto;
 }
 
 
 .photoDiv{
   display: flex;
   flex-direction: row;
+  width: 95%;
+  margin-left: 10px;
 }
 
 .leftP{
-  height: 30px;
+  min-height: inherit;
   width: 5%;
-  margin-top: 35px;
-  margin-left: 2px;
+  margin: auto;
 }
 
 .rightP{
-  height: 30px;
+  min-height: 30px;
   width: 95%;
+  margin: auto;
 }
 
 
@@ -86,17 +93,18 @@
   display: flex;
   flex-direction: row;
   margin-bottom: 40px;
+  width: 95%;
+  margin-left: 10px;
 }
 
 .leftDS{
-  height: 30px;
+  height: inherit;
   width: 5%;
-  margin-top: 40px;
-  margin-left: 2px;
+  margin: auto;
 }
 
 .rightDS{
-  height: 30px;
-  width: 93%;
-  margin-top: 10px;
+  min-height: 30px;
+  width: 95%;
+  margin: auto;
 }
